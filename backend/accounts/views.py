@@ -1,7 +1,8 @@
+from .repository import create_user   #Insert a new user into MongoDB.
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import RegisterSerializer
-
+from .serializers import RegisterSerializer   #checking the user details are valid or not
+from .services import register_user
 
 @api_view(["GET"])
 def hello(request):
@@ -18,14 +19,11 @@ def register(request):
 
     if serializer.is_valid():
 
-        return Response({
-            "success": True,
-            "message": "Validation successful!",
-            "data": serializer.validated_data
-        })
+        response = register_user(serializer.validated_data)
 
-    return Response({
-        "success": False,
-        "errors": serializer.errors
-    }, status=400)
+        if response["success"]:
+            return Response(response, status=201)
 
+        return Response(response, status=400)
+
+    return Response(serializer.errors, status=400)
