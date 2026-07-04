@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --ext .js,.jsx --report-unused-disable-directives --max-warnings 0",
+    "lint-fix": "eslint . --ext .js,.jsx --fix",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "axios": "^1.18.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-icons": "^5.7.0",
     "react-router-dom": "^7.18.1",
     "tailwindcss": "^4.3.2"
   },
@@ -23,6 +25,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "eslint": "^10.6.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.7.0",
