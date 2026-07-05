@@ -1,85 +1,96 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import authService from '../services/authService';
 
 const AuthContext = createContext();
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const checkAuth = () => {
-      try {
-        if (authService.isAuthenticated()) {
-          const userData = authService.getCurrentUser();
-          setUser(userData);
-          setIsAuthenticated(true);
-        }
-      } catch (error) {
-        console.error('Auth check error:', error);
-        authService.logout();
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Check if user is logged in (e.g., from localStorage)
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      // You can validate token or fetch user data here
+      setUser({ token });
+    }
+    setLoading(false);
   }, []);
 
-  const login = async (credentials) => {
+  const login = async (email, password) => {
     try {
-      const response = await authService.login(credentials);
-      setUser(response.user || null);
-      setIsAuthenticated(true);
-      return response;
-    } catch (error) {
-      throw error;
+      setLoading(true);
+      setError(null);
+      // Your login API call here
+      // const response = await api.post('/auth/login', { email, password });
+      // const { token, userData } = response.data;
+      // localStorage.setItem('authToken', token);
+      // setUser(userData);
+      
+      // Mock login for now
+      const mockUser = { id: 1, name: 'John Doe', email };
+      localStorage.setItem('authToken', 'mock-token-123');
+      setUser(mockUser);
+      return { success: true };
+    } catch (err) {
+      setError(err.message || 'Login failed');
+      return { success: false, error: err.message };
+    } finally {
+      setLoading(false);
     }
-  };
-
-  const logout = () => {
-    authService.logout();
-    setUser(null);
-    setIsAuthenticated(false);
   };
 
   const register = async (userData) => {
     try {
-      const response = await authService.register(userData);
-      return response;
-    } catch (error) {
-      throw error;
+      setLoading(true);
+      setError(null);
+      // Your registration API call here
+      // const response = await api.post('/auth/register', userData);
+      // const { token, user } = response.data;
+      // localStorage.setItem('authToken', token);
+      // setUser(user);
+      
+      // Mock registration for now
+      const newUser = { id: Date.now(), ...userData };
+      localStorage.setItem('authToken', 'mock-token-' + Date.now());
+      setUser(newUser);
+      return { success: true, user: newUser };
+    } catch (err) {
+      setError(err.message || 'Registration failed');
+      return { success: false, error: err.message };
+    } finally {
+      setLoading(false);
     }
   };
 
-  const updateUser = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+  const logout = () => {
+    localStorage.removeItem('authToken');
+    setUser(null);
   };
 
   const value = {
     user,
     loading,
-    isAuthenticated,
+    error,
     login,
-    logout,
     register,
-    updateUser,
-    setUser,
-    setIsAuthenticated,
+    logout,
+    isAuthenticated: !!user
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
-  return context;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthContext;
