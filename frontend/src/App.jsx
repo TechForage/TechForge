@@ -1,20 +1,21 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext'; // ✅ Add this import
-import Register from './pages/auth/Register';
-import './App.css';
+// src/App.jsx
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import Auth from "./pages/auth/Auth";
+import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
+    <AuthProvider>
+      <BrowserRouter>
         <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Navigate to="/register" />} />
-          {/* Add login route later */}
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/" element={<Navigate to="/auth" />} />
+          {/* Add other routes as needed */}
         </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
