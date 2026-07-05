@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import "./Register.css";
+import "./Auth.css";
 
 /* Corner circuit trace — lights up ember when its linked field is valid */
 function CornerTrace({ position, active }) {
@@ -35,8 +35,7 @@ function getStrength(pw) {
   return { level: 1, key: "cold", label: "Cold" };
 }
 
-export default function Register() {
-  const { register } = useAuth();
+export default function Auth() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -49,6 +48,7 @@ export default function Register() {
   const [showPw, setShowPw] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [showLogin, setShowLogin] = useState(false);
 
   const update = (key) => (e) =>
     setForm((f) => ({
@@ -62,32 +62,68 @@ export default function Register() {
   const passwordValid = strength.level >= 2;
   const confirmValid = form.confirm.length > 0 && form.confirm === form.password;
 
-  const circuitComplete =
+  const RegistercircuitComplete =
     nameValid && emailValid && passwordValid && confirmValid && form.agree;
+  
+  const LogincircuitComplete =
+    emailValid && passwordValid;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!circuitComplete || submitting) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    setSubmitError(null);
-    setSubmitting(true);
+  const valid = showLogin
+    ? LogincircuitComplete
+    : RegistercircuitComplete;
 
-    const result = await register({
-      name: form.name.trim(),
-      email: form.email.trim(),
-      password: form.password,
+  if (!valid || submitting) return;
+
+  setSubmitError(null);
+  setSubmitting(true);
+
+  try {
+    const url = showLogin
+      ? "http://localhost:5000/api/auth/login"
+      : "http://localhost:5000/api/auth/register";
+
+    const payload = showLogin
+      ? {
+          email: form.email.trim(),
+          password: form.password,
+        }
+      : {
+          name: form.name.trim(),
+          email: form.email.trim(),
+          password: form.password,
+        };
+
+    const response = await axios.post(url, payload);
+
+    setForm({
+      name: "",
+      email: "",
+      password: "",
+      confirm: "",
+      agree: false,
     });
 
-    setSubmitting(false);
-
-    if (result.success) {
-      navigate("/"); // change to wherever a fresh account should land
+    if (showLogin && response.success === "200") {
+      navigate("/dashboard");
     } else {
-      setSubmitError(result.error || "Something went wrong. Try again.");
+      navigate("/login");
     }
-  };
+  } catch (error) {
+    setSubmitError(
+      error.response?.data?.message ||
+      error.message ||
+      "Something went wrong"
+    );
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
+    
     <div className="tf-page">
       {/* ---------------- Left: brand panel ---------------- */}
       <div className="tf-brand">
@@ -128,8 +164,8 @@ export default function Register() {
       </div>
 
       {/* ---------------- Right: form panel ---------------- */}
-      <div className="tf-form-panel">
-        <form className="tf-card" onSubmit={handleSubmit}>
+      {!showLogin ? (<div className="tf-form-panel">
+        <form className="tf-card" onsubmit={handleSubmit}>
           <CornerTrace position="tl" active={nameValid} />
           <CornerTrace position="tr" active={emailValid} />
           <CornerTrace position="bl" active={passwordValid} />
@@ -137,7 +173,7 @@ export default function Register() {
 
           <h2 className="tf-card-heading">Create your account</h2>
           <p className="tf-card-sub">
-            Already forging with us? <a href="/login">Sign in</a>
+            Already forging with us? <a className="tf-link" onClick={() => setShowLogin(true)}>Sign in</a>
           </p>
 
           <div className="tf-field">
@@ -195,22 +231,6 @@ export default function Register() {
                 {showPw ? "hide" : "show"}
               </button>
             </div>
-
-            <div className="tf-gauge">
-              <div className="tf-gauge-track">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className={`tf-gauge-seg ${
-                      strength.level >= i ? strength.key : ""
-                    }`}
-                  />
-                ))}
-              </div>
-              <div className="tf-gauge-label">
-                Heat: <span className="val">{strength.label}</span>
-              </div>
-            </div>
           </div>
 
           <div className="tf-field">
@@ -247,22 +267,97 @@ export default function Register() {
           {submitError && <p className="tf-error">⚠ {submitError}</p>}
 
           <button
-            className={`tf-submit ${circuitComplete ? "energized" : ""}`}
+            className={`tf-submit ${RegistercircuitComplete ? "energized" : ""}`}
             type="submit"
-            disabled={!circuitComplete || submitting}
+            disabled={!RegistercircuitComplete || submitting}
           >
             {submitting
               ? "Forging…"
-              : circuitComplete
+              : RegistercircuitComplete
               ? "Forge my account"
               : "Complete the circuit"}
           </button>
 
           <p className="tf-footer-link">
-            Already have an account? <a href="/login">Sign in</a>
+            Already have an account? <a className="tf-link" onClick = {()=>setShowLogin(true)}>Sign in</a>
           </p>
         </form>
-      </div>
+      </div>) 
+      
+      : 
+      
+      
+      <div className="tf-form-panel">
+        <form className="tf-card" onsubmit={handleSubmit}>
+          <CornerTrace position="tr" active={emailValid} />
+          <CornerTrace position="bl" active={passwordValid} />
+
+          <h2 className="tf-card-heading">Sign in your account</h2>
+          <p className="tf-card-sub">
+            Don't have an account? <a className="tf-link" onClick={() => setShowLogin(false)}>Sign up</a>
+          </p>
+
+          <div className="tf-field">
+            <div className="tf-label">
+              <span>Email address</span>
+              {emailValid && <span className="tf-status ok">✓ good</span>}
+            </div>
+            <div className="tf-input-wrap">
+              <input
+                className={`tf-input ${emailValid ? "valid" : ""}`}
+                type="email"
+                placeholder="you@example.com"
+                value={form.email}
+                onChange={update("email")}
+                autoComplete="email"
+              />
+            </div>
+          </div>
+
+          <div className="tf-field">
+            <div className="tf-label">
+              <span>Password</span>
+            </div>
+            <div className="tf-input-wrap">
+              <input
+                className={`tf-input ${passwordValid ? "valid" : ""}`}
+                type={showPw ? "text" : "password"}
+                placeholder="At least 6 characters"
+                value={form.password}
+                onChange={update("password")}
+                autoComplete="new-password"
+              />
+              <button
+                type="button"
+                className="tf-toggle-visibility"
+                onClick={() => setShowPw((s) => !s)}
+              >
+                {showPw ? "hide" : "show"}
+              </button>
+            </div>
+          </div>
+
+
+          {submitError && <p className="tf-error">⚠ {submitError}</p>}
+
+          <button
+            className={`tf-submit ${LogincircuitComplete ? "energized" : ""}`}
+            type="submit"
+            disabled={!LogincircuitComplete || submitting}
+          >
+            {submitting
+              ? "Forging…"
+              : LogincircuitComplete
+              ? "Forge my account"
+              : "Complete the circuit"}
+          </button>
+
+          <p className="tf-footer-link">
+            Don't have an account? <a className="tf-link" onClick = {()=>setShowLogin(false)}>Sign up</a>
+          </p>
+        </form>
+      </div>}
+      
     </div>
   );
 }
