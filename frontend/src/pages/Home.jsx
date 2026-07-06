@@ -11,6 +11,8 @@ import {
   Aperture,
   Package,
   ChevronRight,
+  Grid,
+  Film,
 } from "lucide-react";
 
 /* ---------------------------------------------------------
@@ -57,7 +59,7 @@ export default function Home() {
             <span className="brand-mark">
               <Package size={16} color="#fff" />
             </span>
-            Orbit
+            TechForge
           </div>
 
           <div className="nav-links">
@@ -99,13 +101,19 @@ export default function Home() {
             </div>
           </Platform>
 
-          {/* Keyboards */}
+          {/* Keyboards - FIXED ICON POSITION */}
           <Platform className="cell-keyboards" glow="magenta">
             <div className="filled-card center-align">
               <div className="orb-row" style={{ justifyContent: "center", marginBottom: 16 }}>
-                <IconOrb size="lg" tint="magenta"><Keyboard size={32} /></IconOrb>
-                <IconOrb size="lg" tint="blue"><Keyboard size={32} /></IconOrb>
+                <IconOrb size="lg" tint="magenta">
+                  <Keyboard size={32} />
+                </IconOrb>
+                <IconOrb size="lg" tint="blue">
+                  <Keyboard size={32} />
+                </IconOrb>
               </div>
+              <div className="platform-label">Keyboards</div>
+              <div className="platform-sub">Mechanical and wireless keyboards.</div>
             </div>
           </Platform>
 
@@ -121,7 +129,11 @@ export default function Home() {
           {/* Drone hero */}
           <Platform className="cell-drone" glow="blue">
             <div className="filled-card center-align">
-              <IconOrb size="lg" tint="blue"><DroneIcon size={34} /></IconOrb>
+              <IconOrb size="lg" tint="blue">
+                <DroneIcon size={34} />
+              </IconOrb>
+              <div className="platform-label" style={{ marginTop: 14 }}>Drones</div>
+              <div className="platform-sub">Capture cinematic aerial moments.</div>
             </div>
           </Platform>
 
@@ -146,38 +158,45 @@ export default function Home() {
                 <IconOrb size="md" tint="warm"><Watch size={24} /></IconOrb>
                 <IconOrb size="lg" tint="neutral"><Headphones size={32} /></IconOrb>
               </div>
+              <div className="platform-label">Audio Collection</div>
               <div className="platform-sub" style={{ margin: "0 auto", textAlign: "center" }}>
-                Curated listening — headphones and earbuds side by side.
+                Premium headphones and earbuds for every listener.
               </div>
             </div>
           </Platform>
 
-          {/* Camcorder */}
+          {/* Shoot Kit */}
           <Platform className="cell-camcorder" glow="blue">
             <div className="filled-card center-align">
-              <IconOrb size="md" tint="neutral"><Camera size={26} /></IconOrb>
+              <IconOrb size="md" tint="neutral">
+                <Film size={26} />
+              </IconOrb>
+              <div className="platform-label" style={{ marginTop: 14 }}>Shoot Kit</div>
+              <div className="platform-sub">Lenses, tripods, and accessories.</div>
             </div>
           </Platform>
 
-          {/* Audio & Gaming CTA */}
+          {/* Audio & Gaming CTA - REMOVED BUTTON */}
           <Platform className="cell-audio-cta" glow="blue">
             <div className="filled-card">
               <IconOrb size="lg" tint="blue"><Headphones size={30} /></IconOrb>
               <div className="platform-label" style={{ marginTop: 14 }}>Audio and Gaming</div>
               <div className="platform-sub">Immersive sound built for long sessions.</div>
-              <button className="cta-btn">Shop Now <ChevronRight size={14} /></button>
             </div>
           </Platform>
 
           {/* Featured collections */}
           <Platform className="cell-collection" glow="blue">
             <div className="filled-card">
-              <div className="eyebrow">Featured</div>
+              <IconOrb size="md" tint="blue">
+                <Grid size={24} />
+              </IconOrb>
+              <div className="eyebrow" style={{ marginTop: 8 }}>Featured</div>
               <div className="platform-label" style={{ marginBottom: 0 }}>Collections</div>
             </div>
           </Platform>
 
-          {/* Camera collection CTA */}
+          {/* Camera Collections - REMOVED BUTTON */}
           <Platform className="cell-camcta" glow="warm">
             <div className="filled-card">
               <div className="orb-row" style={{ marginBottom: 14 }}>
@@ -186,7 +205,6 @@ export default function Home() {
               </div>
               <div className="platform-label">Camera Collections</div>
               <div className="platform-sub">Mirrorless bodies and glass for every kind of shot.</div>
-              <button className="cta-btn">Shop Now <ChevronRight size={14} /></button>
             </div>
           </Platform>
 
@@ -202,8 +220,11 @@ export default function Home() {
           {/* Accessories */}
           <Platform className="cell-accessory" glow="blue">
             <div className="filled-card center-align">
-              <IconOrb size="lg" tint="blue"><DroneIcon size={30} /></IconOrb>
-              <div className="platform-label" style={{ marginTop: 10, fontSize: 12.5 }}>Accessories</div>
+              <IconOrb size="lg" tint="blue">
+                <DroneIcon size={30} />
+              </IconOrb>
+              <div className="platform-label" style={{ marginTop: 12 }}>Accessories</div>
+              <div className="platform-sub">Cables, chargers and everyday essentials.</div>
             </div>
           </Platform>
 
@@ -218,6 +239,7 @@ export default function Home() {
           <a href="#">Privacy</a>
           <a href="#">Terms</a>
         </footer>
+
       </div>
     </div>
   );
