@@ -30,6 +30,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import "./Home.css";
+import { Link } from "react-router-dom";
 
 const categories = [
   { icon: Cpu, label: "Processors" },
@@ -73,7 +74,7 @@ const deals = [
 
 const featuredCategories = [
   { label: "Graphics Cards", icon: CircuitBoard, color: "#6366f1" ,route: "/graphics-cards"},
-  { label: "Monitors", icon: Monitor, color: "#22d3ee" ,route: "/monitor"},
+  { label: "Monitors", icon: Monitor, color: "#22d3ee" ,route: "/monitors"},
   { label: "Laptops", icon: Laptop, color: "#f59e0b" ,route: "/laptops"},
   { label: "Keyboard", icon: Gamepad2, color: "#f472b6" ,route: "/keyboard"},
   { label: "Hardware", icon: HardDrive, color: "#10b981" ,route: "/hardware"},
@@ -240,8 +241,8 @@ export default function Home() {
                   </div>
                   <div className="featured-grid">
                     {featuredCategories.map((cat) => (
-                      <Link to={cat.route} key={cat.label}>
                         <div className="featured-card">
+                          <Link to={cat.route} className="featured-link">
                           <div className="featured-icon" style={{ color: cat.color }}>
                             <cat.icon size={32} />
                           </div>
@@ -249,8 +250,8 @@ export default function Home() {
                           <div className="featured-arrow">
                             <ArrowRight size={14} />
                           </div>
+                          </Link>
                         </div>
-                      </Link>
                     ))}
                   </div>
                 </section>
