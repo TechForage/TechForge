@@ -2,6 +2,7 @@ import React from 'react';
 import './keyboard.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Sidebar from '../../components/Navbar/Sidebar';
+import Footer from "../../components/Navbar/Footer";
  import {
   Cpu,
   CircuitBoard,
@@ -94,53 +95,7 @@ function Keyboard() {
       </div>
 
       {/* Full Width Footer Area */}
-      <footer className="footer">
-        <div className="footer-links-grid">
-          <div className="footer-brand-col">
-            <div className="brand"><span className="logo-icon">⛃</span> Tech<span>Forage</span></div>
-          </div>
-          <div>
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#careers">Careers</a></li>
-              <li><a href="#contact">Contact Us</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Shop</h4>
-            <ul>
-              <li><a href="#all">All Products</a></li>
-              <li><a href="#new">New Arrivals</a></li>
-              <li><a href="#sellers">Best Sellers</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Support</h4>
-            <ul>
-              <li><a href="#help">Help Center</a></li>
-              <li><a href="#shipping">Shipping & Delivery</a></li>
-              <li><a href="#returns">Returns & Refunds</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Connect</h4>
-            <p className="footer-email">hello@techforage.com</p>
-            <p>+1 (800) 123-4567</p>
-            <div className="social-icons">
-              <span>🅵</span> <span>🆃</span> <span>🅸</span> <span>🅻</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p>© 2026 TechForage. All rights reserved.</p>
-          <div className="trust-badges">
-            <span>🛡️ 100% Secure Payments</span>
-            <span>🔄 Easy Returns (30-Day Policy)</span>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
       </div>
     </div>
   );
