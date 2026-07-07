@@ -4,11 +4,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI")
+MONGODB_URI = os.getenv("MONGODB_URI")
 DATABASE_NAME = os.getenv("DATABASE_NAME")
 
-print("MONGO_URI:", MONGO_URI)
-print("DATABASE_NAME:", DATABASE_NAME)
+if not MONGODB_URI:
+    raise ValueError("MONGODB_URI environment variable is not set.")
 
-client = MongoClient(MONGO_URI)
+if not DATABASE_NAME:
+    raise ValueError("DATABASE_NAME environment variable is not set.")
+
+client = MongoClient(MONGODB_URI)
 db = client[DATABASE_NAME]
