@@ -1,0 +1,318 @@
+/* Color Palette & Base Configurations */
+:root {
+  --bg-main: #060e17;
+  --bg-card: #0b1523;
+  --bg-nav: #09111c;
+  --border-color: #162a45;
+  --accent-cyan: #00f2fe;
+  --accent-cyan-glow: rgba(0, 242, 254, 0.25);
+  --text-primary: #ffffff;
+  --text-secondary: #8fa0b5;
+  --accent-green: #00e676;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* High-Density Compact Product Grid Layout */
+.main-content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Sleek Border-Glow Neon Product Cards */
+.product-card {
+  background: linear-gradient(145deg, #0b1523, #08101a);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtle Card Glow Effect on Hover */
+.product-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 8px 24px var(--accent-cyan-glow), 0 0 12px rgba(0, 242, 254, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  z-index: 2;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.bestseller {
+  background: rgba(0, 230, 118, 0.1);
+  color: var(--accent-green);
+  border: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+.badge.discount {
+  background: rgba(0, 242, 254, 0.1);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.wishlist-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wishlist-btn:hover {
+  background: rgba(233, 30, 99, 0.15);
+  color: #ff4081;
+  border-color: rgba(233, 30, 99, 0.3);
+}
+
+/* Enhanced Image Display Plate */
+.product-img-wrapper {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  background: #040a12;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  position: relative;
+}
+
+.product-img-wrapper img {
+  max-height: 80%;
+  max-width: 80%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-img-wrapper img {
+  transform: scale(1.08);
+}
+
+/* Info Layout Restructuring */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 6px 0;
+  color: #e2e8f0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 38px;
+}
+
+.product-variant {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0 0 12px 0;
+}
+
+.rating-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+
+.rating-tag {
+  background: rgba(0, 230, 118, 0.12);
+  color: var(--accent-green);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.review-count { 
+  color: var(--text-secondary); 
+}
+
+.assured-tag {
+  color: #4385f4;
+  font-weight: 600;
+  margin-left: auto;
+  font-size: 11px;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 16px;
+  margin-top: auto;
+}
+
+.current-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.original-price {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+.discount-pct {
+  color: var(--accent-green);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Premium Attractive Add to Cart Button */
+.add-to-cart-btn {
+  background: linear-gradient(90deg, #00b8d4, #00f2fe);
+  color: #050b14;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
+}
+
+.add-to-cart-btn:hover {
+  background: linear-gradient(90deg, #00f2fe, #00e5ff);
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+  transform: translateY(-1px);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(1px);
+}
+
+/* Full Width Footer Area */
+.footer {
+  background-color: var(--bg-nav);
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+  margin-top: 60px;
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(4, 1fr);
+  gap: 40px;
+  padding: 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.footer-links-grid h4 {
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.footer-links-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links-grid ul li { 
+  margin-bottom: 12px; 
+}
+
+.footer-links-grid ul li a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-links-grid ul li a:hover { 
+  color: #fff; 
+}
+
+.footer-email { 
+  color: var(--accent-cyan); 
+  font-weight: 500; 
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+  font-size: 18px;
+  margin-top: 15px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.footer-bottom {
+  border-top: 1px solid #0f2239;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.trust-badges {
+  display: flex;
+  gap: 25px;
+}
