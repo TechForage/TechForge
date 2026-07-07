@@ -1,29 +1,23 @@
-from django.http import JsonResponse
 from django.contrib import admin
-from django.urls import path
 from django.urls import path, include
+
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
     SpectacularRedocView,
 )
 
-def home(request):
-    return JsonResponse({
-        "project": "TechForage API",
-        "version": "1.0.0",
-        "status": "Running"
-    })
-
 urlpatterns = [
-
     path("admin/", admin.site.urls),
 
-    path(
-        "api/categories/",
-        include("categories.urls"),
-    ),
+    # Categories
+    path("api/categories/", include("categories.urls")),
 
+    # Brands
+    path("api/brands/", include("brands.urls")),
+    # Products
+    path("api/products/", include("products.urls")),
+    # Swagger
     path(
         "api/schema/",
         SpectacularAPIView.as_view(),
@@ -41,7 +35,4 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    path("auth/", include("accounts.urls")), 
-
-    path("api/brands/", include("brands.urls")),
 ]

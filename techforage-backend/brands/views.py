@@ -1,37 +1,19 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
-from drf_spectacular.views import (
-    SpectacularAPIView,
-    SpectacularSwaggerView,
-    SpectacularRedocView,
+from .views import (
+    BrandListCreateAPIView,
+    BrandDetailAPIView,
 )
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-
-    # Categories
-    path("api/categories/", include("categories.urls")),
-
-    # Brands
-    path("api/brands/", include("brands.urls")),
-
-    # Swagger
     path(
-        "api/schema/",
-        SpectacularAPIView.as_view(),
-        name="schema",
+        "",
+        BrandListCreateAPIView.as_view(),
+        name="brand-list-create",
     ),
-
     path(
-        "api/docs/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
-        name="swagger-ui",
-    ),
-
-    path(
-        "api/redoc/",
-        SpectacularRedocView.as_view(url_name="schema"),
-        name="redoc",
+        "<str:brand_id>/",
+        BrandDetailAPIView.as_view(),
+        name="brand-detail",
     ),
 ]
