@@ -1,220 +1,346 @@
-import "./Home.css";
+import React, { useState, useEffect } from "react";
 import {
+  Cpu,
+  MemoryStick,
+  Laptop,
+  CircuitBoard,
+  HardDrive,
+  Monitor,
+  Gamepad2,
+  Wifi,
+  Watch,
   Search,
   User,
-  Speaker,
-  Lightbulb,
-  Keyboard,
-  Camera,
-  Watch,
-  Headphones,
-  Aperture,
-  Package,
-  ChevronRight,
-  Grid,
-  Film,
+  Heart,
+  Bell,
+  ShoppingCart,
+  ChevronDown,
+  ArrowRight,
+  Star,
+  Zap,
+  TrendingUp,
+  Award,
+  Shield,
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar/Navbar";
-/* ---------------------------------------------------------
-   Small inline icon for the drone (lucide has no drone icon)
---------------------------------------------------------- */
-const DroneIcon = ({ size = 40, className = "" }) => (
-  <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
-    <circle cx="10" cy="10" r="6" stroke="currentColor" strokeWidth="1.6" />
-    <circle cx="38" cy="10" r="6" stroke="currentColor" strokeWidth="1.6" />
-    <circle cx="10" cy="34" r="6" stroke="currentColor" strokeWidth="1.6" />
-    <circle cx="38" cy="34" r="6" stroke="currentColor" strokeWidth="1.6" />
-    <line x1="14" y1="13" x2="20" y2="19" stroke="currentColor" strokeWidth="1.6" />
-    <line x1="34" y1="13" x2="28" y2="19" stroke="currentColor" strokeWidth="1.6" />
-    <line x1="14" y1="31" x2="20" y2="25" stroke="currentColor" strokeWidth="1.6" />
-    <line x1="34" y1="31" x2="28" y2="25" stroke="currentColor" strokeWidth="1.6" />
-    <rect x="18" y="19" width="12" height="6" rx="2" stroke="currentColor" strokeWidth="1.6" />
-  </svg>
-);
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+} from "react-icons/fa";
+import "./Home.css";
 
-/* ---------------------------------------------------------
-   Platform: the isometric-feeling "floating slab" card
---------------------------------------------------------- */
-function Platform({ children, className = "", glow = "blue" }) {
-  return (
-    <div className={`platform glow-${glow} ${className}`}>
-      <div className="platform-top">{children}</div>
-    </div>
-  );
+const categories = [
+  { icon: Cpu, label: "Processors" },
+  { icon: CircuitBoard, label: "Graphics Cards" },
+  { icon: Laptop, label: "Laptops" },
+  { icon: CircuitBoard, label: "Motherboards" },
+  { icon: MemoryStick, label: "RAM Memory" },
+  { icon: HardDrive, label: "SSD Storage" },
+  { icon: Monitor, label: "Monitors" },
+  { icon: Gamepad2, label: "Gaming Accessories" },
+  { icon: Wifi, label: "Networking" },
+  { icon: Watch, label: "Smart Devices" },
+];
+
+const deals = [
+  { 
+    name: "ASUS ROG Strix GeForce RTX 4060", 
+    price: "$1,889.00", 
+    rating: 4,
+    reviews: 128,
+  },
+  { 
+    name: "Intel Core i7-14800K", 
+    price: "$545.90", 
+    rating: 5,
+    reviews: 95,
+  },
+  { 
+    name: "Razer Blade 14 Gaming Laptop", 
+    price: "$2,000.00", 
+    rating: 4,
+    reviews: 67,
+  },
+  { 
+    name: "Samsung Odyssey Neo G9", 
+    price: "$1,699.00", 
+    rating: 5,
+    reviews: 43,
+  },
+];
+
+const featuredCategories = [
+  { label: "Graphics Cards", icon: CircuitBoard, color: "#6366f1" ,route: "/graphics-cards"},
+  { label: "Monitors", icon: Monitor, color: "#22d3ee" ,route: "/monitor"},
+  { label: "Laptops", icon: Laptop, color: "#f59e0b" ,route: "/laptops"},
+  { label: "Keyboard", icon: Gamepad2, color: "#f472b6" ,route: "/keyboard"},
+  { label: "Hardware", icon: HardDrive, color: "#10b981" ,route: "/hardware"},
+];
+
+const brands = [
+  { name: "Intel", color: "#0071c5" },
+  { name: "AMD", color: "#ed1c24" },
+  { name: "NVIDIA", color: "#76b900" },
+  { name: "ASUS", color: "#00a3e0" },
+  { name: "HP", color: "#0096d6" },
+  { name: "Samsung", color: "#1428a0" },
+  { name: "Lenovo", color: "#e2231a" },
+];
+
+function useCountdown(hours, minutes, seconds) {
+  const [time, setTime] = useState({ h: hours, m: minutes, s: seconds });
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTime((prev) => {
+        let { h, m, s } = prev;
+        if (s > 0) s -= 1;
+        else if (m > 0) {
+          m -= 1;
+          s = 59;
+        } else if (h > 0) {
+          h -= 1;
+          m = 59;
+          s = 59;
+        }
+        return { h, m, s };
+      });
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return time;
 }
 
-function IconOrb({ children, size = "md", tint = "neutral" }) {
-  return <div className={`orb orb-${size} tint-${tint}`}>{children}</div>;
-}
+const pad = (n) => String(n).padStart(2, "0");
 
 export default function Home() {
+  const dealsTimer = useCountdown(4, 21, 44);
+  const featuredTimer = useCountdown(54, 52, 35);
+
   return (
-    <div className="store-root">
-      <div className="circuit-bg" />
+    <div className="homepage">
 
-      <div className="wrap">
-        {/* ---------------- NAVBAR ---------------- */}
-
-        <Navbar />
-
-        {/* ---------------- BENTO GRID ---------------- */}
-        <div className="bento">
-
-          {/* Smart Home */}
-          <Platform className="cell-smart" glow="warm">
-            <div className="filled-card">
-              <div className="orb-row" style={{ marginBottom: 18 }}>
-                <IconOrb size="lg" tint="warm"><Speaker size={30} /></IconOrb>
-                <IconOrb size="md" tint="warm"><Lightbulb size={24} /></IconOrb>
-              </div>
-              <div className="platform-label">Smart Home</div>
-              <div className="platform-sub">Voice hubs and adaptive lighting that learn your routine.</div>
+      {/* NAVBAR */}
+      <header className="navbar">
+        <div className="container">
+          <div className="logo">
+            <div className="logo-icon">
+              <Cpu size={20} />
             </div>
-          </Platform>
+            <span>TechForage</span>
+          </div>
 
-          {/* Keyboards - FIXED ICON POSITION */}
-          <Platform className="cell-keyboards" glow="magenta">
-            <Link to="/keyboard">
-            <div className="filled-card center-align">
-              <div className="orb-row" style={{ justifyContent: "center", marginBottom: 16 }}>
-                <IconOrb size="lg" tint="magenta">
-                  <Keyboard size={32} />
-                </IconOrb>
-                <IconOrb size="lg" tint="blue">
-                  <Keyboard size={32} />
-                </IconOrb>
-              </div>
-              <div className="platform-label">Keyboards</div>
-              <div className="platform-sub">Mechanical and wireless keyboards.</div>
+          <div className="search-bar">
+            <input type="text" placeholder="Search Processors, GPUs, Laptops, AI Gear..." />
+            <button className="search-category">
+              All Categories <ChevronDown size={14} />
+            </button>
+            <button className="search-btn">
+              <Search size={18} />
+            </button>
+          </div>
+
+          <div className="nav-icons">
+            <div className="nav-icon">
+              <User size={22} />
+              <span>Account</span>
             </div>
-            </Link>
-          </Platform>
-
-          {/* PC Parts */}
-          <Platform className="cell-pcparts" glow="blue">
-            <div className="filled-card center-align">
-              <IconOrb size="md" tint="blue"><Aperture size={26} /></IconOrb>
-              <div className="platform-label" style={{ marginTop: 12, fontSize: 12.5 }}>PC Parts</div>
-              <div className="platform-sub" style={{ fontSize: 10.5 }}>Everything inside</div>
+            <div className="nav-icon">
+              <Heart size={22} />
+              <span>Wishlist</span>
             </div>
-          </Platform>
-
-          {/* Drone hero */}
-          <Platform className="cell-drone" glow="blue">
-            <div className="filled-card center-align">
-              <IconOrb size="lg" tint="blue">
-                <DroneIcon size={34} />
-              </IconOrb>
-              <div className="platform-label" style={{ marginTop: 14 }}>Drones</div>
-              <div className="platform-sub">Capture cinematic aerial moments.</div>
+            <div className="cart">
+              <ShoppingCart size={22} />
+              <span className="cart-count">3</span>
             </div>
-          </Platform>
-
-          {/* Wearables */}
-          <Platform className="cell-wearables" glow="magenta">
-            <div className="filled-card">
-              <div className="orb-row" style={{ marginBottom: 16 }}>
-                <IconOrb size="sm" tint="magenta"><Watch size={20} /></IconOrb>
-                <IconOrb size="sm" tint="blue"><Watch size={20} /></IconOrb>
-                <IconOrb size="md" tint="warm"><Watch size={24} /></IconOrb>
-              </div>
-              <div className="eyebrow">Featured</div>
-              <div className="platform-label">AR Lens Collection</div>
-            </div>
-          </Platform>
-
-          {/* Audio middle */}
-          <Platform className="cell-audio-mid" glow="blue">
-            <div className="filled-card center-align">
-              <div className="orb-row" style={{ justifyContent: "center", marginBottom: 14 }}>
-                <IconOrb size="lg" tint="blue"><Headphones size={32} /></IconOrb>
-                <IconOrb size="md" tint="warm"><Watch size={24} /></IconOrb>
-                <IconOrb size="lg" tint="neutral"><Headphones size={32} /></IconOrb>
-              </div>
-              <div className="platform-label">Audio Collection</div>
-              <div className="platform-sub" style={{ margin: "0 auto", textAlign: "center" }}>
-                Premium headphones and earbuds for every listener.
-              </div>
-            </div>
-          </Platform>
-
-          {/* Shoot Kit */}
-          <Platform className="cell-camcorder" glow="blue">
-            <div className="filled-card center-align">
-              <IconOrb size="md" tint="neutral">
-                <Film size={26} />
-              </IconOrb>
-              <div className="platform-label" style={{ marginTop: 14 }}>Shoot Kit</div>
-              <div className="platform-sub">Lenses, tripods, and accessories.</div>
-            </div>
-          </Platform>
-
-          {/* Audio & Gaming CTA - REMOVED BUTTON */}
-          <Platform className="cell-audio-cta" glow="blue">
-            <div className="filled-card">
-              <IconOrb size="lg" tint="blue"><Headphones size={30} /></IconOrb>
-              <div className="platform-label" style={{ marginTop: 14 }}>Audio and Gaming</div>
-              <div className="platform-sub">Immersive sound built for long sessions.</div>
-            </div>
-          </Platform>
-
-          {/* Featured collections */}
-          <Platform className="cell-collection" glow="blue">
-            <div className="filled-card">
-              <IconOrb size="md" tint="blue">
-                <Grid size={24} />
-              </IconOrb>
-              <div className="eyebrow" style={{ marginTop: 8 }}>Featured</div>
-              <div className="platform-label" style={{ marginBottom: 0 }}>Collections</div>
-            </div>
-          </Platform>
-
-          {/* Camera Collections - REMOVED BUTTON */}
-          <Platform className="cell-camcta" glow="warm">
-            <div className="filled-card">
-              <div className="orb-row" style={{ marginBottom: 14 }}>
-                <IconOrb size="lg" tint="neutral"><Camera size={30} /></IconOrb>
-                <IconOrb size="md" tint="neutral"><Camera size={24} /></IconOrb>
-              </div>
-              <div className="platform-label">Camera Collections</div>
-              <div className="platform-sub">Mirrorless bodies and glass for every kind of shot.</div>
-            </div>
-          </Platform>
-
-          {/* New Arrivals */}
-          <Platform className="cell-newarr" glow="blue">
-            <div className="filled-card">
-              <IconOrb size="md" tint="blue"><Package size={24} /></IconOrb>
-              <div className="platform-label" style={{ marginTop: 12, fontSize: 13 }}>New Arrivals</div>
-              <div className="platform-sub" style={{ fontSize: 10.5 }}>Fresh in this week</div>
-            </div>
-          </Platform>
-
-          {/* Accessories */}
-          <Platform className="cell-accessory" glow="blue">
-            <div className="filled-card center-align">
-              <IconOrb size="lg" tint="blue">
-                <DroneIcon size={30} />
-              </IconOrb>
-              <div className="platform-label" style={{ marginTop: 12 }}>Accessories</div>
-              <div className="platform-sub">Cables, chargers and everyday essentials.</div>
-            </div>
-          </Platform>
-
+          </div>
         </div>
+      </header>
 
-        {/* ---------------- FOOTER ---------------- */}
-        <footer className="footer-links">
-          <a href="#">About</a>
-          <a href="#">Contact</a>
-          <a href="#">Support</a>
-          <a href="#">Careers</a>
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-        </footer>
+      {/* MAIN CONTENT */}
+      <div className="main-content">
+        <div className="container">
+          {/* LEFT SIDEBAR */}
+          <aside className="sidebar">
+            <div className="sidebar-title">Categories</div>
+            {categories.map(({ icon: Icon, label }) => (
+              <div className="sidebar-item" key={label}>
+                <Icon size={18} />
+                <span>{label}</span>
+                <ChevronDown size={14} className="sidebar-arrow" />
+              </div>
+            ))}
+          </aside>
 
+          {/* RIGHT CONTENT */}
+          <div className="content-area">
+            {/* TOP ROW: HERO + DEALS */}
+            <div className="row">
+              <div className="col-hero">
+                <section className="hero">
+                  <div className="hero-text">
+                    <h1>
+                      UNLEASH THE POWER
+                      <br />
+                      OF <span className="hero-highlight">AI COMPUTING</span>
+                    </h1>
+                    <p>Next-Gen Hardware | Expert AI Assistant</p>
+                    <button className="btn-primary">
+                      Shop Now <ArrowRight size={18} />
+                    </button>
+                  </div>
+                  <div className="hero-image">
+                    <div className="hero-glow"></div>
+                    <Cpu size={100} className="hero-cpu" />
+                    <div className="hero-stats">
+                      <div className="hero-stat">
+                        <span className="stat-value">1000+</span>
+                        <span className="stat-label">Products</span>
+                      </div>
+                      <div className="hero-stat">
+                        <span className="stat-value">50+</span>
+                        <span className="stat-label">Brands</span>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            {/* MIDDLE ROW: AI + FEATURED CATEGORIES */}
+            <div className="row">
+              <div className="col-ai">
+                <section className="ai-section">
+                  <div className="ai-header">
+                    <Cpu size={20} />
+                    <h3>AI Recommended Products</h3>
+                  </div>
+                  <div className="ai-banner">
+                    <div className="ai-icon">
+                      <Cpu size={44} />
+                    </div>
+                    <div className="ai-text">
+                      <strong>AI Recommended Products</strong>
+                      <p>Tailored picks based on your performance and creative workloads.</p>
+                      <button className="btn-ai-shop">
+                        Shop Now <ArrowRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div className="col-featured">
+                <section className="featured-categories">
+                  <div className="featured-header">
+                    <h3>Featured Categories</h3>
+                  </div>
+                  <div className="featured-grid">
+                    {featuredCategories.map((cat) => (
+                      <Link to={cat.route} key={cat.label}>
+                        <div className="featured-card">
+                          <div className="featured-icon" style={{ color: cat.color }}>
+                            <cat.icon size={32} />
+                          </div>
+                          <p>{cat.label}</p>
+                          <div className="featured-arrow">
+                            <ArrowRight size={14} />
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            {/* BOTTOM ROW: BRANDS + TESTIMONIALS + NEWSLETTER */}
+            <div className="row row-bottom">
+              <div className="col-brands">
+                <section className="brands-section">
+                  <h3>🏷️ Featured Brands</h3>
+                  <div className="brands-grid">
+                    {brands.map((brand) => (
+                      <div className="brand-card" key={brand.name}>
+                        <div className="brand-logo" style={{ background: brand.color }}>
+                          {brand.name.charAt(0)}
+                        </div>
+                        <span>{brand.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+              
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* FOOTER */}
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-grid">
+            <div className="footer-col">
+              <h4>Company</h4>
+              <a>Home</a>
+              <a>Shop Now</a>
+              <a>PC Builder</a>
+              <a>Contact</a>
+            </div>
+
+            <div className="footer-col">
+              <h4>Shop</h4>
+              <a>All Categories</a>
+              <a>Order Tracking</a>
+              <a>Shipping &amp; Returns</a>
+              <a>Privacy Policy</a>
+            </div>
+
+            <div className="footer-col">
+              <h4>Support</h4>
+              <a>Help Center</a>
+              <a>Quick Links</a>
+              <a>Terms of Service</a>
+              <a>Cookie Policy</a>
+            </div>
+
+            <div className="footer-col">
+              <h4>Connect</h4>
+              <a>📧 contact@techforage.com</a>
+              <a>📞 1-800-FORAGE</a>
+              <a>📍 123 Tech Street, SV</a>
+              <a>About Us</a>
+            </div>
+
+            <div className="footer-col">
+              <h4>Payment</h4>
+              <div className="payment-icons">
+                <span>💳</span>
+                <span>🏦</span>
+                <span>🔒</span>
+                <span>✅</span>
+              </div>
+              <div className="footer-badge">
+                <Shield size={16} />
+                <span>Secure Checkout</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <span>© 2026 TechForage. All rights reserved.</span>
+            <div className="footer-links">
+              <a>Privacy Policy</a>
+              <a>Terms of Service</a>
+              <a>Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

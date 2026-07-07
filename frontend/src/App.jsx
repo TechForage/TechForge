@@ -12,7 +12,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/keyboard" element={<Keyboard />} />
-        <Route path="/navbar" element={<Navbar />} />
       </Routes>
     </BrowserRouter>
   );
