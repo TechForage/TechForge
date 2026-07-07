@@ -1,0 +1,54 @@
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: sticky;
+  top: 100px;
+}
+
+.sidebar-title {
+  padding: 14px 18px;
+  font-weight: 700;
+  font-size: 15px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 1px solid rgba(30, 45, 79, 0.5);
+}
+
+.sidebar-item:last-child {
+  border-bottom: none;
+}
+
+.sidebar-item:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  padding-left: 24px;
+}
+
+.sidebar-arrow {
+  margin-left: auto;
+  opacity: 0.4;
+  transition: transform 0.3s;
+}
+
+.sidebar-item:hover .sidebar-arrow {
+  transform: rotate(-90deg);
+  opacity: 1;
+}

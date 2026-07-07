@@ -1,7 +1,18 @@
 import React from 'react';
 import './keyboard.css';
 import Navbar from '../../components/Navbar/Navbar';
- 
+import Sidebar from '../../components/Navbar/Sidebar';
+ import {
+  Cpu,
+  CircuitBoard,
+  Laptop,
+  MemoryStick,
+  HardDrive,
+  Monitor,
+  Gamepad2,
+  Wifi,
+  Watch,
+} from "lucide-react";
 // Sample product data based on your UI images
 const productsData = [
   { id: 1, name: 'HP K200 Bluetooth Standard Laptop Keyboard Compatible...', type: 'Black', rating: 3.9, reviews: '1,619', price: 599, originalPrice: 1199, discount: '50% off', badge: 'Bestseller', image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300&q=80' },
@@ -13,6 +24,19 @@ const productsData = [
   { id: 9, name: 'Chaebol Combo Portable Re...', type: 'Yellow', rating: 4.1, reviews: '1,999', price: 998, originalPrice: 1999, discount: '51% off', badge: 'Discount', image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=300&q=80' }
 ];
 
+const categories = [
+  { icon: Cpu, label: "Processors" },
+  { icon: CircuitBoard, label: "Graphics Cards" },
+  { icon: Laptop, label: "Laptops" },
+  { icon: CircuitBoard, label: "Motherboards" },
+  { icon: MemoryStick, label: "RAM Memory" },
+  { icon: HardDrive, label: "SSD Storage" },
+  { icon: Monitor, label: "Monitors" },
+  { icon: Gamepad2, label: "Gaming Accessories" },
+  { icon: Wifi, label: "Networking" },
+  { icon: Watch, label: "Smart Devices" },
+];
+
 function Keyboard() {
   const handleAddToCart = (productName) => {
     console.log(`Added ${productName} to cart.`);
@@ -21,10 +45,14 @@ function Keyboard() {
 
   return (
     <div className="techforage-site">
-     <div className="wrap" >
-        <Navbar/>
-      {/* Main High-Density Product Grid Workspace */}
-      <main className="main-content">
+      <div className="wrap">
+      <Navbar />
+
+  <div className="content-layout">
+    <Sidebar categories={categories} />
+
+    {/* Main High-Density Product Grid Workspace */}
+    <main className="main-content">
         <div className="products-grid">
           {productsData.map((product) => (
             <div key={product.id} className="product-card">
@@ -63,6 +91,7 @@ function Keyboard() {
           ))}
         </div>
       </main>
+      </div>
 
       {/* Full Width Footer Area */}
       <footer className="footer">

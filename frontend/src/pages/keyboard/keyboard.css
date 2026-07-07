@@ -11,6 +11,12 @@
   --accent-green: #00e676;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', Roboto, sans-serif;
@@ -20,11 +26,9 @@ body {
 }
 
 .wrap {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 32px;
-  position: relative;
-  z-index: 1;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* High-Density Compact Product Grid Layout */

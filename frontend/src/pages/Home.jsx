@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
+import Sidebar from "../components/Navbar/Sidebar";
 import {
   Cpu,
   MemoryStick,
@@ -131,16 +132,7 @@ export default function Home() {
       <div className="main-content">
         <div className="container">
           {/* LEFT SIDEBAR */}
-          <aside className="sidebar">
-            <div className="sidebar-title">Categories</div>
-            {categories.map(({ icon: Icon, label }) => (
-              <div className="sidebar-item" key={label}>
-                <Icon size={18} />
-                <span>{label}</span>
-                <ChevronDown size={14} className="sidebar-arrow" />
-              </div>
-            ))}
-          </aside>
+          <Sidebar categories={categories}/>
 
           {/* RIGHT CONTENT */}
           <div className="content-area">
@@ -206,20 +198,25 @@ export default function Home() {
                     <h3>Featured Categories</h3>
                   </div>
                   <div className="featured-grid">
-                    {featuredCategories.map((cat) => (
-                        <div className="featured-card">
-                          <Link to={cat.route} className="featured-link">
-                          <div className="featured-icon" style={{ color: cat.color }}>
-                            <cat.icon size={32} />
-                          </div>
-                          <p>{cat.label}</p>
-                          <div className="featured-arrow">
-                            <ArrowRight size={14} />
-                          </div>
-                          </Link>
-                        </div>
-                    ))}
-                  </div>
+  {featuredCategories.map((cat) => (
+    <div className="featured-card" key={cat.route}>
+      <Link to={cat.route} className="featured-link">
+        <div
+          className="featured-icon"
+          style={{ color: cat.color }}
+        >
+          <cat.icon size={32} />
+        </div>
+
+        <p>{cat.label}</p>
+
+        <div className="featured-arrow">
+          <ArrowRight size={14} />
+        </div>
+      </Link>
+    </div>
+  ))}
+</div>
                 </section>
               </div>
             </div>
