@@ -1,42 +1,58 @@
-import React from "react";
-import "./Navbar.css";
-import { Search, User, Package } from "lucide-react";
+import {
+  Cpu,
+  Search,
+  ChevronDown,
+  User,
+  Heart,
+  ShoppingCart,
+} from "lucide-react";
 
-export default function Navbar() {
-  return (   
-    <div>
-       <nav className="navbar">
-          <div className="brand">
-            <span className="brand-mark">
-              <Package size={16} color="#fff" />
-            </span>
-            TechForge
+const Navbar = () => {
+  return (
+    <header className="navbar">
+      <div className="container">
+        <div className="logo">
+          <div className="logo-icon">
+            <Cpu size={20} />
+          </div>
+          <span>TechForage</span>
+        </div>
+
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search Processors, GPUs, Laptops, AI Gear..."
+          />
+
+          <button className="search-category">
+            All Categories
+            <ChevronDown size={14} />
+          </button>
+
+          <button className="search-btn">
+            <Search size={18} />
+          </button>
+        </div>
+
+        <div className="nav-icons">
+          <div className="nav-icon">
+            <User size={22} />
+            <span>Account</span>
           </div>
 
-          <div className="nav-links">
-            <a href="#" className="active">Home</a>
-            <a href="#">Shop Now</a>
-            <a href="#">New Arrivals</a>
-            <a href="#">Deals</a>
+          <div className="nav-icon">
+            <Heart size={22} />
+            <span>Wishlist</span>
           </div>
 
-          <div className="search-box">
-            <Search size={14} />
-            <input placeholder="Search for a product…" />
+          <div className="cart">
+            <ShoppingCart size={22} />
+            <span className="cart-count">3</span>
           </div>
+        </div>
+      </div>
+    </header>
+  );
+};
 
-          <div className="nav-right">
-            <span className="icon-btn"><User size={16} /></span>
-            <div className="profile">
-              <span className="avatar" />
-              <div className="profile-text">
-                <div className="profile-name">Ana Cole</div>
-                <div className="profile-sub">Pro member</div>
-              </div>
-            </div>
-          </div>
-        </nav>
-    </div>  
-   
-);
-}
+export default Navbar;
