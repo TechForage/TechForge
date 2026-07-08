@@ -1,19 +1,15 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Auth from "./pages/auth/Auth";
 import Keyboard from "./pages/keyboard/keyboard";
-import Navbar from "./components/Navbar/Navbar";
+import Watchlist from "./pages/watchlist/Watchlist";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/keyboard" element={<Keyboard />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/keyboard" element={<Keyboard />} />
+      <Route path="/watchlist" element={<Watchlist />} />
+    </Routes>
   );
 }
 

@@ -320,3 +320,9 @@ body {
   display: flex;
   gap: 25px;
 }
+.wishlist-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}

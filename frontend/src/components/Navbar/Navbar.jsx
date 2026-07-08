@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Cpu,
   Search,
@@ -6,12 +7,16 @@ import {
   Heart,
   ShoppingCart,
 } from "lucide-react";
+import { useWatchlist } from "../../contexts/WatchlistContext";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { watchlistCount } = useWatchlist();
+
   return (
     <header className="navbar">
       <div className="container">
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
           <div className="logo-icon">
             <Cpu size={20} />
           </div>
@@ -40,9 +45,23 @@ const Navbar = () => {
             <span>Account</span>
           </div>
 
-          <div className="nav-icon">
-            <Heart size={22} />
-            <span>Wishlist</span>
+          <div
+            className="nav-icon watchlist-nav-icon"
+            onClick={() => navigate("/watchlist")}
+            role="button"
+            tabIndex={0}
+          >
+            <div className="watchlist-icon-wrap">
+              <Heart
+                size={22}
+                fill={watchlistCount > 0 ? "#00f2fe" : "none"}
+                color={watchlistCount > 0 ? "#00f2fe" : "currentColor"}
+              />
+              {watchlistCount > 0 && (
+                <span className="watchlist-badge">{watchlistCount}</span>
+              )}
+            </div>
+            <span>Watchlist</span>
           </div>
 
           <div className="cart">
