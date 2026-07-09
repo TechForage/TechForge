@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Keyboard from "./pages/keyboard/keyboard";
+import Keyboard from "./pages/keyboard/Keyboard";
 import Watchlist from "./pages/watchlist/Watchlist";
+import SearchResults from "./pages/SearchResults/SearchResults";
 
 function App() {
   return (
@@ -9,6 +10,8 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/keyboard" element={<Keyboard />} />
       <Route path="/watchlist" element={<Watchlist />} />
+      <Route path="/search" element={<SearchResults />} />
+      <Route path="*" element={<SearchResults />} />
     </Routes>
   );
 }

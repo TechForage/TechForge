@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Cpu,
@@ -8,15 +9,49 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { useWatchlist } from "../../contexts/WatchlistContext";
+import { resolveSearchRoute } from "../../config/searchRoutes";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { watchlistCount } = useWatchlist();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  /**
+   * Shared search handler used by both the Enter key
+   * and the search button click.
+   */
+  const handleSearch = () => {
+    const trimmedTerm = searchTerm.trim();
+
+    if (trimmedTerm.length === 0) {
+      return; // ignore empty/whitespace-only searches
+    }
+
+    const matchedRoute = resolveSearchRoute(trimmedTerm);
+
+    if (matchedRoute) {
+      navigate(matchedRoute);
+    } else {
+      navigate(`/search?q=${encodeURIComponent(trimmedTerm)}`);
+    }
+
+    setSearchTerm("");
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <header className="navbar">
       <div className="container">
-        <div className="logo" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+        <div
+          className="logo"
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer" }}
+        >
           <div className="logo-icon">
             <Cpu size={20} />
           </div>
@@ -27,14 +62,17 @@ const Navbar = () => {
           <input
             type="text"
             placeholder="Search Processors, GPUs, Laptops, AI Gear..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
 
-          <button className="search-category">
+          <button className="search-category" type="button">
             All Categories
             <ChevronDown size={14} />
           </button>
 
-          <button className="search-btn">
+          <button className="search-btn" type="button" onClick={handleSearch}>
             <Search size={18} />
           </button>
         </div>
