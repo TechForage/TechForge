@@ -75,11 +75,11 @@ const deals = [
 ];
 
 const featuredCategories = [
-  { label: "Graphics Cards", icon: CircuitBoard, color: "#6366f1" ,route: "/graphicscard"},
-  { label: "Monitors", icon: Monitor, color: "#22d3ee" ,route: "/monitors"},
-  { label: "Laptops", icon: Laptop, color: "#f59e0b" ,route: "/laptop"},
-  { label: "Keyboard", icon: Gamepad2, color: "#f472b6" ,route: "/keyboard"},
-  { label: "Hardware", icon: HardDrive, color: "#10b981" ,route: "/hardware"},
+  { label: "Graphics Cards", icon: CircuitBoard, color: "#6366f1", route: "/graphicscard" },
+  { label: "Monitors", icon: Monitor, color: "#22d3ee", route: "/monitors" },
+  { label: "Laptops", icon: Laptop, color: "#f59e0b", route: "/laptop" },
+  { label: "Keyboard", icon: Gamepad2, color: "#f472b6", route: "/keyboard" },
+  { label: "Hardware", icon: HardDrive, color: "#10b981", route: "/hardware" },
 ];
 
 const brands = [

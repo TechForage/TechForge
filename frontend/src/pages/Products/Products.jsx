@@ -171,31 +171,59 @@ const Allproducts = {
       badge: "Discount",
       image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&q=80"
     }
+  ],
+
+  hardware: [
+    {
+      id: 601,
+      name: "Corsair RM750x 750W Power Supply",
+      brand: "Corsair",
+      type: "80+ Gold, Fully Modular",
+      rating: 4.7,
+      reviews: "890",
+      price: 9999,
+      originalPrice: 11999,
+      discount: "16% off",
+      badge: "Bestseller",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&q=80"
+    },
+    {
+      id: 602,
+      name: "NZXT H510 Mid Tower Cabinet",
+      brand: "NZXT",
+      type: "ATX Case",
+      rating: 4.5,
+      reviews: "615",
+      price: 6999,
+      originalPrice: 8499,
+      discount: "18% off",
+      badge: "Discount",
+      image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=300&q=80"
+    }
   ]
 };
 
 const categories = [
-  { icon: Cpu, label: "Processors" ,route: "/processor"},
-  { icon: CircuitBoard, label: "Graphics Cards" ,route: "/graphicscard"},
-  { icon: Laptop, label: "Laptops" ,route: "/laptop"},
-  { icon: CircuitBoard, label: "Motherboards" ,route: "/motherboard"},
-  { icon: MemoryStick, label: "RAM Memory" ,route: "/ram-memory"},
-  { icon: HardDrive, label: "SSD Storage" ,route: "/ssd-storage"},
-  { icon: Monitor, label: "Monitors" ,route: "/monitors"},
-  { icon: Gamepad2, label: "Gaming Accessories" ,route: "/gaming-accessories"},
-  { icon: Wifi, label: "Networking" ,route: "/networking"},
-  { icon: Watch, label: "Smart Devices" ,route: "/smart-devices"},
+  { icon: Cpu, label: "Processors", route: "/processor" },
+  { icon: CircuitBoard, label: "Graphics Cards", route: "/graphicscard" },
+  { icon: Laptop, label: "Laptops", route: "/laptop" },
+  { icon: CircuitBoard, label: "Motherboards", route: "/motherboard" },
+  { icon: MemoryStick, label: "RAM Memory", route: "/ram" },
+  { icon: HardDrive, label: "SSD Storage", route: "/ssd" },
+  { icon: Monitor, label: "Monitors", route: "/monitors" },
+  { icon: Gamepad2, label: "Gaming Accessories", route: "/gaming-accessories" },
+  { icon: Wifi, label: "Networking", route: "/networking" },
+  { icon: Watch, label: "Smart Devices", route: "/smart-devices" },
 ];
 
 
 
 function Products() {
 
-
   const { category } = useParams();
 
   const productsData = Allproducts[category] || [];
-  
+
   const { isInWatchlist, toggleWatchlist } = useWatchlist();
 
   const handleAddToCart = (productName) => {
@@ -211,57 +239,64 @@ function Products() {
           <Sidebar categories={categories} />
 
           <main className="main-content">
-            <div className="products-grid">
-              {productsData.map((product) => {
-                const saved = isInWatchlist(product.id);
-                return (
-                  <div key={product.id} className="product-card">
-                    <div className="card-header">
-                      <span className={`badge ${product.badge.toLowerCase()}`}>
-                        {product.badge}
-                      </span>
-                      <button
-                        className="wishlist-btn"
-                        onClick={() => toggleWatchlist(product)}
-                        aria-label={saved ? "Remove from watchlist" : "Add to watchlist"}
-                      >
-                        <Heart
-                          size={16}
-                          fill={saved ? "#ff4081" : "none"}
-                          color={saved ? "#ff4081" : "currentColor"}
-                        />
-                      </button>
-                    </div>
-                    <div className="product-img-wrapper">
-                      <img src={product.image} alt={product.name} />
-                    </div>
-                    <div className="product-info">
-                      <h3 className="product-title">{product.name}</h3>
-                      <p className="product-variant">{product.type}</p>
-
-                      <div className="rating-row">
-                        <span className="rating-tag">★ {product.rating}</span>
-                        <span className="review-count">({product.reviews})</span>
-                        <span className="assured-tag">✓ Assured</span>
+            {productsData.length === 0 ? (
+              <div style={{ padding: "60px 0", textAlign: "center", color: "var(--ink-dim, #8f98a8)" }}>
+                <h2 style={{ color: "var(--ink, #e9edf3)" }}>No products found</h2>
+                <p>We don't have any products listed for "{category}" yet.</p>
+              </div>
+            ) : (
+              <div className="products-grid">
+                {productsData.map((product) => {
+                  const saved = isInWatchlist(product.id);
+                  return (
+                    <div key={product.id} className="product-card">
+                      <div className="card-header">
+                        <span className={`badge ${product.badge.toLowerCase()}`}>
+                          {product.badge}
+                        </span>
+                        <button
+                          className="wishlist-btn"
+                          onClick={() => toggleWatchlist(product)}
+                          aria-label={saved ? "Remove from watchlist" : "Add to watchlist"}
+                        >
+                          <Heart
+                            size={16}
+                            fill={saved ? "#ff4081" : "none"}
+                            color={saved ? "#ff4081" : "currentColor"}
+                          />
+                        </button>
                       </div>
-
-                      <div className="price-row">
-                        <span className="current-price">₹{product.price}</span>
-                        <span className="original-price">₹{product.originalPrice}</span>
-                        <span className="discount-pct">{product.discount}</span>
+                      <div className="product-img-wrapper">
+                        <img src={product.image} alt={product.name} />
                       </div>
+                      <div className="product-info">
+                        <h3 className="product-title">{product.name}</h3>
+                        <p className="product-variant">{product.type}</p>
 
-                      <button
-                        className="add-to-cart-btn"
-                        onClick={() => handleAddToCart(product.name)}
-                      >
-                        🛒 Add to Cart
-                      </button>
+                        <div className="rating-row">
+                          <span className="rating-tag">★ {product.rating}</span>
+                          <span className="review-count">({product.reviews})</span>
+                          <span className="assured-tag">✓ Assured</span>
+                        </div>
+
+                        <div className="price-row">
+                          <span className="current-price">₹{product.price}</span>
+                          <span className="original-price">₹{product.originalPrice}</span>
+                          <span className="discount-pct">{product.discount}</span>
+                        </div>
+
+                        <button
+                          className="add-to-cart-btn"
+                          onClick={() => handleAddToCart(product.name)}
+                        >
+                          🛒 Add to Cart
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </main>
         </div>
 
