@@ -115,7 +115,7 @@ const Allproducts = {
     }
   ],
 
-  laptops: [
+  laptop: [
     {
       id: 401,
       name: "HP Pavilion 15 Intel Core i5 Laptop",
@@ -177,7 +177,7 @@ const Allproducts = {
 const categories = [
   { icon: Cpu, label: "Processors" ,route: "/processor"},
   { icon: CircuitBoard, label: "Graphics Cards" ,route: "/graphicscard"},
-  { icon: Laptop, label: "Laptops" ,route: "/laptops"},
+  { icon: Laptop, label: "Laptops" ,route: "/laptop"},
   { icon: CircuitBoard, label: "Motherboards" ,route: "/motherboard"},
   { icon: MemoryStick, label: "RAM Memory" ,route: "/ram-memory"},
   { icon: HardDrive, label: "SSD Storage" ,route: "/ssd-storage"},
