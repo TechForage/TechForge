@@ -1,13 +1,16 @@
 /* ===== SIDEBAR ===== */
 .sidebar {
-  width: 220px;
+  width: 260px;
   flex-shrink: 0;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
-  overflow: hidden;
-  position: sticky;
-  top: 100px;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+  
 }
 
 .sidebar-title {
