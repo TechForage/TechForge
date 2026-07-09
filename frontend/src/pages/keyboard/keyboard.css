@@ -326,3 +326,21 @@ body {
   justify-content: center;
   padding: 0;
 }
+
+/* --- Add/Update this section in keyboard.css --- */
+
+/* Standard Flex container to align Sidebar and Main Content side-by-side */
+.content-layout {
+  display: flex;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Adjust Main Content to fill the rest of the layout smoothly */
+.main-content {
+  flex-grow: 1;
+  padding: 40px;
+  min-width: 0; /* Prevents flex items from breaking grid responsiveness */
+}
