@@ -58,7 +58,7 @@ const Watchlist = () => {
                 </p>
                 <button
                   className="watchlist-empty-btn"
-                  onClick={() => navigate("/keyboards")}
+                  onClick={() => navigate("/")}
                 >
                   Continue Shopping
                 </button>
