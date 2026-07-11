@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heart } from 'lucide-react';
 import './Products.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Sidebar from '../../components/Navbar/Sidebar';
 import Footer from "../../components/Navbar/Footer";
+import FilterSidebar from '../../components/FilterSidebar/FilterSidebar';
+import { applyFilters, applySort } from '../../utils/productFilters';
 import { useWatchlist } from '../../contexts/WatchlistContext';
 import { useParams } from 'react-router-dom';
 import {
@@ -226,6 +228,19 @@ function Products() {
 
   const { isInWatchlist, toggleWatchlist } = useWatchlist();
 
+  // Filter + sort state for the reusable FilterSidebar.
+  const [filters, setFilters] = useState({});
+  const [sortBy, setSortBy] = useState('popularity');
+
+  // Reset filters/sort whenever the category changes so stale
+  // filters from one category don't leak into another.
+  useEffect(() => {
+    setFilters({});
+    setSortBy('popularity');
+  }, [category]);
+
+  const visibleProducts = applySort(applyFilters(productsData, filters), sortBy);
+
   const handleAddToCart = (productName) => {
     console.log(`Added ${productName} to cart.`);
   };
@@ -238,15 +253,31 @@ function Products() {
         <div className="content-layout">
           <Sidebar categories={categories} />
 
+          {productsData.length > 0 && (
+            <FilterSidebar
+              category={category}
+              products={productsData}
+              filters={filters}
+              onFilterChange={setFilters}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+            />
+          )}
+
           <main className="main-content">
             {productsData.length === 0 ? (
               <div style={{ padding: "60px 0", textAlign: "center", color: "var(--ink-dim, #8f98a8)" }}>
                 <h2 style={{ color: "var(--ink, #e9edf3)" }}>No products found</h2>
                 <p>We don't have any products listed for "{category}" yet.</p>
               </div>
+            ) : visibleProducts.length === 0 ? (
+              <div style={{ padding: "60px 0", textAlign: "center", color: "var(--ink-dim, #8f98a8)" }}>
+                <h2 style={{ color: "var(--ink, #e9edf3)" }}>No products match your filters</h2>
+                <p>Try clearing some filters to see more results.</p>
+              </div>
             ) : (
               <div className="products-grid">
-                {productsData.map((product) => {
+                {visibleProducts.map((product) => {
                   const saved = isInWatchlist(product.id);
                   return (
                     <div key={product.id} className="product-card">
