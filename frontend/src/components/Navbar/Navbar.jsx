@@ -9,11 +9,13 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { useWatchlist } from "../../contexts/WatchlistContext";
+import { useCart } from "../../contexts/CartContext";
 import { resolveSearchRoute } from "../../config/searchRoutes";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { watchlistCount } = useWatchlist();
+  const { totalItems } = useCart();
   const [searchTerm, setSearchTerm] = useState("");
 
   /**
@@ -102,9 +104,16 @@ const Navbar = () => {
             <span>Watchlist</span>
           </div>
 
-          <div className="cart">
+          <div
+            className="cart"
+            onClick={() => navigate("/cart")}
+            role="button"
+            tabIndex={0}
+          >
             <ShoppingCart size={22} />
-            <span className="cart-count">3</span>
+            {totalItems > 0 && (
+              <span className="cart-count">{totalItems}</span>
+            )}
           </div>
         </div>
       </div>

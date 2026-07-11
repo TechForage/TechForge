@@ -7,6 +7,7 @@ import Footer from "../../components/Navbar/Footer";
 import FilterSidebar from '../../components/FilterSidebar/FilterSidebar';
 import { applyFilters, applySort } from '../../utils/productFilters';
 import { useWatchlist } from '../../contexts/WatchlistContext';
+import { useCart } from '../../contexts/CartContext';
 import { useParams } from 'react-router-dom';
 import {
   Cpu,
@@ -29,6 +30,7 @@ function Products() {
   const productsData = Allproducts[category] || [];
 
   const { isInWatchlist, toggleWatchlist } = useWatchlist();
+  const { addToCart } = useCart();
 
   // Filter + sort state for the reusable FilterSidebar.
   const [filters, setFilters] = useState({});
@@ -43,8 +45,12 @@ function Products() {
 
   const visibleProducts = applySort(applyFilters(productsData, filters), sortBy);
 
-  const handleAddToCart = (productName) => {
-    console.log(`Added ${productName} to cart.`);
+  const handleAddToCart = (e, product) => {
+    // Stop the click from bubbling up to the surrounding <Link>,
+    // otherwise "Add to Cart" would also navigate to the product page.
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product, 1);
   };
 
   return (
@@ -83,8 +89,8 @@ function Products() {
                 {visibleProducts.map((product) => {
                   const saved = isInWatchlist(product.id);
                   return (
-                    <Link to={`/${category}/${product.id}`}>
-                    <div key={product.id} className="product-card">
+                    <Link key={product.id} to={`/${category}/${product.id}`}>
+                    <div className="product-card">
                       <div className="card-header">
                         <span className={`badge ${product.badge.toLowerCase()}`}>
                           {product.badge}
@@ -122,7 +128,7 @@ function Products() {
 
                         <button
                           className="add-to-cart-btn"
-                          onClick={() => handleAddToCart(product.name)}
+                          onClick={(e) => handleAddToCart(e, product)}
                         >
                           🛒 Add to Cart
                         </button>

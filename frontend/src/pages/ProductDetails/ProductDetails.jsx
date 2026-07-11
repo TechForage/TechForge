@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Navbar/Footer';
 import { getProduct, getRelatedProducts } from '../../utils/productsData';
 import { useWatchlist } from '../../contexts/WatchlistContext';
+import { useCart } from '../../contexts/CartContext';
 
 // The mock data only stores one overall rating + review count per product
 // (no per-star breakdown). This derives a plausible 5→1 star distribution
@@ -32,6 +33,7 @@ function ProductDetails() {
   const { category, id } = useParams();
   const navigate = useNavigate();
   const { isInWatchlist, toggleWatchlist } = useWatchlist();
+  const { addToCart } = useCart();
 
   const product = useMemo(() => getProduct(category, id), [category, id]);
   const related = useMemo(() => getRelatedProducts(category, id, 4), [category, id]);
@@ -72,7 +74,7 @@ function ProductDetails() {
   const savings = product.originalPrice - product.price;
 
   const handleAddToCart = () => {
-    console.log(`Added ${qty} x ${product.name} to cart.`);
+    addToCart(product, qty);
     setAddedMessage(`Added ${qty} to cart`);
     window.clearTimeout(handleAddToCart._t);
     handleAddToCart._t = window.setTimeout(() => setAddedMessage(''), 2200);
