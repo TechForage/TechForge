@@ -35,16 +35,16 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 
 const categories = [
-  { icon: Cpu, label: "Processors" },
-  { icon: CircuitBoard, label: "Graphics Cards" },
-  { icon: Laptop, label: "Laptops" },
-  { icon: CircuitBoard, label: "Motherboards" },
-  { icon: MemoryStick, label: "RAM Memory" },
-  { icon: HardDrive, label: "SSD Storage" },
-  { icon: Monitor, label: "Monitors" },
-  { icon: Gamepad2, label: "Gaming Accessories" },
-  { icon: Wifi, label: "Networking" },
-  { icon: Watch, label: "Smart Devices" },
+  { icon: Cpu, label: "Processors", route: "/processor" },
+  { icon: CircuitBoard, label: "Graphics Cards", route: "/graphicscard" },
+  { icon: Laptop, label: "Laptops", route: "/laptop" },
+  { icon: CircuitBoard, label: "Motherboards", route: "/motherboard" },
+  { icon: MemoryStick, label: "RAM Memory", route: "/ram" },
+  { icon: HardDrive, label: "SSD Storage", route: "/ssd" },
+  { icon: Monitor, label: "Monitors", route: "/monitors" },
+  { icon: Gamepad2, label: "Gaming Accessories", route: "/gamingaccessories" },
+  { icon: Wifi, label: "Networking", route: "/networking" },
+  { icon: Watch, label: "Smart Devices", route: "/smartdevices" },
 ];
 
 const deals = [
