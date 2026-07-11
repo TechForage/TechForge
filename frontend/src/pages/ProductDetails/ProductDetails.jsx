@@ -237,7 +237,7 @@ function ProductDetails() {
                     className="pd-related-card"
                     role="button"
                     tabIndex={0}
-                    onClick={() => navigate(`/product/${category}/${rp.id}`)}
+                    onClick={() => navigate(`/${category}/${rp.id}`)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') navigate(`/product/${category}/${rp.id}`);
                     }}
