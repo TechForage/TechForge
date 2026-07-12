@@ -147,9 +147,9 @@ export default function Home() {
                       OF <span className="hero-highlight">AI COMPUTING</span>
                     </h1>
                     <p>Next-Gen Hardware | Expert AI Assistant</p>
-                    <button className="btn-primary">
+                    <Link className="btn-primary" to="/keyboard">
                       Shop Now <ArrowRight size={18} />
-                    </button>
+                    </Link>
                   </div>
                   <div className="hero-image">
                     <div className="hero-glow"></div>
