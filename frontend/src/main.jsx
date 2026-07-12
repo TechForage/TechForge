@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import { WatchlistProvider } from './contexts/WatchlistContext.jsx'
 import { CartProvider } from './contexts/CartContext.jsx'
+import { SaveForLaterProvider } from './contexts/SaveForLaterContext.jsx'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import './index.css'
 
@@ -12,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <WatchlistProvider>
         <CartProvider>
-          <App />
+          <SaveForLaterProvider>
+            <App />
+          </SaveForLaterProvider>
         </CartProvider>
       </WatchlistProvider>
     </BrowserRouter>
