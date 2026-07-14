@@ -2,10 +2,14 @@ const express = require("express");
 const cors = require("cors");
 
 const errorHandler = require("./middleware/error.middleware");
+const testRoutes = require("./routes/test.routes");
+
 
 const app = express();
 
 app.use(cors());
+
+app.use("/api/test", testRoutes);
 
 app.use(express.json());
 
