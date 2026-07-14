@@ -1,9 +1,13 @@
 const express = require("express");
+const authRoutes = require("./routes/auth.routes");
 const cors = require("cors");
 
-const errorHandler = require("./middleware/error.middleware");
-
 const app = express();
+
+
+app.use("/api/v1/auth", authRoutes);
+
+const errorHandler = require("./middleware/error.middleware");
 
 app.use(cors());
 
@@ -19,7 +23,7 @@ app.get("/", (req, res) => {
     });
 
 });
-
 app.use(errorHandler);
+
 
 module.exports = app;
