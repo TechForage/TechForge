@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import "./Auth.css";
 
@@ -49,6 +50,7 @@ export default function Auth() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
+  const { login, register } = useAuth();
 
   const update = (key) => (e) =>
     setForm((f) => ({
@@ -81,22 +83,19 @@ const handleSubmit = async (e) => {
   setSubmitting(true);
 
   try {
-    const url = showLogin
-      ? "http://localhost:5000/api/auth/login"
-      : "http://localhost:5000/api/auth/register";
+    const payload = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      password: form.password,
+    };
 
-    const payload = showLogin
-      ? {
-          email: form.email.trim(),
-          password: form.password,
-        }
-      : {
-          name: form.name.trim(),
-          email: form.email.trim(),
-          password: form.password,
-        };
+    const result = showLogin
+      ? await login(payload.email, payload.password)
+      : await register(payload);
 
-    const response = await axios.post(url, payload);
+    if (!result.success) {
+      throw new Error(result.error || "Authentication failed");
+    }
 
     setForm({
       name: "",
@@ -106,11 +105,7 @@ const handleSubmit = async (e) => {
       agree: false,
     });
 
-    if (showLogin && response.success === "200") {
-      navigate("/dashboard");
-    } else {
-      navigate("/login");
-    }
+    navigate("/");
   } catch (error) {
     setSubmitError(
       error.response?.data?.message ||
@@ -165,7 +160,7 @@ const handleSubmit = async (e) => {
 
       {/* ---------------- Right: form panel ---------------- */}
       {!showLogin ? (<div className="tf-form-panel">
-        <form className="tf-card" onsubmit={handleSubmit}>
+        <form className="tf-card" onSubmit={handleSubmit}>
           <CornerTrace position="tl" active={nameValid} />
           <CornerTrace position="tr" active={emailValid} />
           <CornerTrace position="bl" active={passwordValid} />
@@ -288,7 +283,7 @@ const handleSubmit = async (e) => {
       
       
       <div className="tf-form-panel">
-        <form className="tf-card" onsubmit={handleSubmit}>
+        <form className="tf-card" onSubmit={handleSubmit}>
           <CornerTrace position="tr" active={emailValid} />
           <CornerTrace position="bl" active={passwordValid} />
 
