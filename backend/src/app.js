@@ -9,27 +9,34 @@ const productRoutes = require("./routes/product.routes");
 
 const app = express();
 
+// --- Core middleware (must come BEFORE routes) ---
 app.use(cors());
-
-app.use("/api/test", testRoutes);
-
-app.use("/api/categories", categoryRoutes);
-app.use("/api/brands", brandRoutes);
-app.use("/api/products", productRoutes);
-
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
+// --- Root health-check route ---
 app.get("/", (req, res) => {
-
     res.json({
         success: true,
         message: "Welcome to TechForge API"
     });
-
 });
 
+// --- Routes ---
+app.use("/api/test", testRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/brands", brandRoutes);
+app.use("/api/products", productRoutes);
+
+// --- 404 handler (for unmatched routes) ---
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: `Route ${req.originalUrl} not found`
+    });
+});
+
+// --- Global error handler (always last) ---
 app.use(errorHandler);
 
 module.exports = app;
