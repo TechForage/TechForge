@@ -7,6 +7,9 @@ const categoryRoutes = require("./routes/category.routes");
 const brandRoutes = require("./routes/brand.routes");
 const productRoutes = require("./routes/product.routes");
 
+const { apiReference } = require("@scalar/express-api-reference");
+const swaggerSpec = require("./docs/swagger");
+
 const app = express();
 
 // --- Core middleware (must come BEFORE routes) ---
@@ -21,6 +24,27 @@ app.get("/", (req, res) => {
         message: "Welcome to TechForge API"
     });
 });
+
+// --- API Documentation (Scalar + OpenAPI) ---
+// Serve the raw OpenAPI JSON (useful for Postman import, external tools, etc.)
+app.get("/docs/openapi.json", (req, res) => {
+    res.json(swaggerSpec);
+});
+
+// Serve the interactive Scalar documentation UI
+app.use(
+    "/docs",
+    apiReference({
+        spec: {
+            content: swaggerSpec,
+        },
+        theme: "purple",
+        metaData: {
+            title: "TechForge E-Commerce API - Docs",
+            description: "REST API documentation for the TechForge backend.",
+        },
+    })
+);
 
 // --- Routes ---
 app.use("/api/test", testRoutes);
