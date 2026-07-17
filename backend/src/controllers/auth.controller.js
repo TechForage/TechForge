@@ -15,6 +15,20 @@ const register = asyncHandler(async (req, res) => {
     );
 });
 
+const login = asyncHandler(async (req, res) => {
+    const auth = await authService.loginUser(req.body);
+
+    res.status(200).json(new ApiResponse(200, "Login successful", auth));
+});
+
+const logout = asyncHandler(async (req, res) => {
+    await authService.logoutUser(req.auth.tokenId, req.user._id);
+
+    res.status(200).json(new ApiResponse(200, "Logout successful"));
+});
+
 module.exports = {
     register,
+    login,
+    logout,
 };
