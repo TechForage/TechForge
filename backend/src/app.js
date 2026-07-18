@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/v1/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
 const errorHandler = require("./middleware/error.middleware");
 
