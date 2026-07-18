@@ -3,6 +3,8 @@ const authRoutes = require("./routes/auth.routes");
 const cors = require("cors");
 
 const errorHandler = require("./middleware/error.middleware");
+const { apiReference } = require("@scalar/express-api-reference");
+const swaggerSpec = require("./docs/swagger");
 
 const app = express();
 
@@ -11,9 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/v1/auth", authRoutes);
-
-const errorHandler = require("./middleware/error.middleware");
+app.use("/api/auth", authRoutes);
 
 // --- Root health-check route ---
 app.get("/", (req, res) => {
@@ -21,10 +21,27 @@ app.get("/", (req, res) => {
         success: true,
         message: "Welcome to TechForge API"
     });
-
 });
 
-app.use(errorHandler);
+// --- API Documentation (Scalar + OpenAPI) ---
+app.get("/docs/openapi.json", (req, res) => {
+    res.json(swaggerSpec);
+});
 
+app.use(
+    "/docs",
+    apiReference({
+        spec: {
+            content: swaggerSpec,
+        },
+        theme: "purple",
+        metaData: {
+            title: "TechForge E-Commerce API - Docs",
+            description: "REST API documentation for the TechForge backend.",
+        },
+    })
+);
+
+app.use(errorHandler);
 
 module.exports = app;

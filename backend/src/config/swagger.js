@@ -20,7 +20,7 @@ const swaggerDefinition = {
     },
   ],
   tags: [
-    { name: "Authentication", description: "User registration, login, and JWT-based auth (planned)" },
+    { name: "Authentication", description: "User registration, login, logout, and JWT-based session auth" },
     { name: "Categories", description: "Product category management" },
     { name: "Brands", description: "Product brand management" },
     { name: "Products", description: "Product catalog management" },
@@ -36,7 +36,7 @@ const swaggerDefinition = {
         scheme: "bearer",
         bearerFormat: "JWT",
         description:
-          "JWT Bearer token. NOTE: authentication middleware is not yet enforced on any route in this codebase; this scheme is defined in advance for when it is added.",
+          "JWT Bearer token issued by POST /api/auth/login or /register. Required on routes protected by the authenticate middleware (e.g. logout). Not currently enforced on Category/Brand/Product routes.",
       },
     },
     schemas: {
@@ -136,6 +136,81 @@ const swaggerDefinition = {
           brand: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0d2" },
           isFeatured: { type: "boolean", example: true },
           isActive: { type: "boolean", example: true },
+        },
+      },
+      RegisterInput: {
+        type: "object",
+        required: ["firstName", "lastName", "email", "password"],
+        properties: {
+          firstName: { type: "string", example: "John" },
+          lastName: { type: "string", example: "Doe" },
+          email: { type: "string", format: "email", example: "john.doe@example.com" },
+          password: { type: "string", format: "password", minLength: 6, example: "secret123" },
+          phone: { type: "string", example: "+91 9876543210" },
+          avatar: { type: "string", example: "https://example.com/avatar.jpg" },
+        },
+      },
+      LoginInput: {
+        type: "object",
+        required: ["email", "password"],
+        properties: {
+          email: { type: "string", format: "email", example: "john.doe@example.com" },
+          password: { type: "string", format: "password", example: "secret123" },
+        },
+      },
+      UserPublic: {
+        type: "object",
+        description: "User document with the password field stripped out.",
+        properties: {
+          _id: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0e1" },
+          firstName: { type: "string", example: "John" },
+          lastName: { type: "string", example: "Doe" },
+          email: { type: "string", format: "email", example: "john.doe@example.com" },
+          phone: { type: "string", example: "+91 9876543210" },
+          avatar: { type: "string", example: "" },
+          role: { type: "string", enum: ["user", "admin"], example: "user" },
+          createdAt: { type: "string", format: "date-time" },
+          updatedAt: { type: "string", format: "date-time" },
+        },
+      },
+      AuthData: {
+        type: "object",
+        properties: {
+          user: { $ref: "#/components/schemas/UserPublic" },
+          token: {
+            type: "string",
+            description: "JWT access token to send as 'Authorization: Bearer <token>' on protected routes.",
+            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+          },
+          expiresAt: { type: "string", format: "date-time", example: "2026-07-19T10:00:00.000Z" },
+        },
+      },
+      AuthSuccessResponse: {
+        type: "object",
+        description: "Response shape produced by ApiResponse for auth endpoints.",
+        properties: {
+          success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
+          message: { type: "string", example: "Login successful" },
+          data: { $ref: "#/components/schemas/AuthData" },
+        },
+      },
+      LogoutSuccessResponse: {
+        type: "object",
+        properties: {
+          success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
+          message: { type: "string", example: "Logout successful" },
+          data: { type: "object", nullable: true, example: null },
+        },
+      },
+      AuthErrorResponse: {
+        type: "object",
+        description: "Response shape produced by ApiError for auth endpoints (distinct from the generic ErrorResponse schema — no 'error' field, includes 'statusCode').",
+        properties: {
+          success: { type: "boolean", example: false },
+          statusCode: { type: "integer", example: 401 },
+          message: { type: "string", example: "Invalid email or password" },
         },
       },
       SuccessResponse: {
