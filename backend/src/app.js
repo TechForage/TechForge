@@ -58,6 +58,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/reviews", reviewRoutes); // review.routes.js defines full sub-paths internally
 // review.routes.js defines full sub-paths internally
 // ("/products/:id/reviews" and "/reviews/:id"), so it mounts at bare "/api"
 app.use("/api", reviewRoutes);
