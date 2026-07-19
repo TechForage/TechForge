@@ -213,30 +213,275 @@ const swaggerDefinition = {
           message: { type: "string", example: "Invalid email or password" },
         },
       },
-      SuccessResponse: {
+      // --- Cart ---
+      CartItem: {
+        type: "object",
+        properties: {
+          product: { $ref: "#/components/schemas/Product" },
+          quantity: { type: "integer", example: 2 },
+        },
+      },
+      Cart: {
+        type: "object",
+        properties: {
+          _id: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0e5" },
+          user: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0e1" },
+          items: {
+            type: "array",
+            items: { $ref: "#/components/schemas/CartItem" },
+          },
+          totalPrice: { type: "number", example: 189998 },
+          createdAt: { type: "string", format: "date-time" },
+          updatedAt: { type: "string", format: "date-time" },
+        },
+      },
+      AddToCartInput: {
+        type: "object",
+        required: ["productId", "quantity"],
+        properties: {
+          productId: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0d4" },
+          quantity: { type: "integer", minimum: 1, example: 2 },
+        },
+      },
+      UpdateCartItemInput: {
+        type: "object",
+        required: ["quantity"],
+        properties: {
+          quantity: { type: "integer", minimum: 1, example: 3 },
+        },
+      },
+      CartSuccessResponse: {
         type: "object",
         properties: {
           success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
+          message: { type: "string", example: "Cart fetched successfully" },
+          data: { $ref: "#/components/schemas/Cart" },
+        },
+      },
+      // --- Wishlist ---
+      Wishlist: {
+        type: "object",
+        properties: {
+          _id: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0e6" },
+          user: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0e1" },
+          products: {
+            type: "array",
+            items: { $ref: "#/components/schemas/Product" },
+          },
+          createdAt: { type: "string", format: "date-time" },
+          updatedAt: { type: "string", format: "date-time" },
+        },
+      },
+      WishlistSuccessResponse: {
+        type: "object",
+        properties: {
+          success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
+          message: { type: "string", example: "Wishlist fetched successfully" },
+          data: { $ref: "#/components/schemas/Wishlist" },
+        },
+      },
+      // --- Orders ---
+      ShippingAddressInput: {
+        type: "object",
+        required: [
+          "fullName",
+          "phone",
+          "addressLine1",
+          "city",
+          "state",
+          "postalCode",
+          "country",
+        ],
+        properties: {
+          fullName: { type: "string", example: "John Doe" },
+          phone: { type: "string", example: "+91 9876543210" },
+          addressLine1: { type: "string", example: "221B Baker Street" },
+          addressLine2: { type: "string", example: "" },
+          city: { type: "string", example: "Chennai" },
+          state: { type: "string", example: "Tamil Nadu" },
+          postalCode: { type: "string", example: "600001" },
+          country: { type: "string", example: "India" },
+        },
+      },
+      CreateOrderInput: {
+        type: "object",
+        required: ["shippingAddress", "paymentMethod"],
+        properties: {
+          shippingAddress: { $ref: "#/components/schemas/ShippingAddressInput" },
+          paymentMethod: {
+            type: "string",
+            enum: ["COD", "Card", "UPI", "NetBanking"],
+            example: "COD",
+          },
+        },
+      },
+      UpdateOrderStatusInput: {
+        type: "object",
+        required: ["orderStatus"],
+        properties: {
+          orderStatus: {
+            type: "string",
+            enum: ["Pending", "Confirmed", "Packed", "Shipped", "Delivered", "Cancelled"],
+            example: "Shipped",
+          },
+        },
+      },
+      OrderItem: {
+        type: "object",
+        properties: {
+          product: { $ref: "#/components/schemas/Product" },
+          quantity: { type: "integer", example: 1 },
+          price: {
+            type: "number",
+            description: "Unit price captured at the time the order was placed",
+            example: 94999,
+          },
+        },
+      },
+      Order: {
+        type: "object",
+        properties: {
+          _id: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0f1" },
+          user: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0e1" },
+          items: {
+            type: "array",
+            items: { $ref: "#/components/schemas/OrderItem" },
+          },
+          shippingAddress: { $ref: "#/components/schemas/ShippingAddressInput" },
+          paymentMethod: { type: "string", example: "COD" },
+          paymentStatus: {
+            type: "string",
+            enum: ["Pending", "Paid", "Failed"],
+            example: "Pending",
+          },
+          orderStatus: {
+            type: "string",
+            enum: ["Pending", "Confirmed", "Packed", "Shipped", "Delivered", "Cancelled"],
+            example: "Pending",
+          },
+          totalAmount: { type: "number", example: 94999 },
+          createdAt: { type: "string", format: "date-time" },
+          updatedAt: { type: "string", format: "date-time" },
+        },
+      },
+      OrderSuccessResponse: {
+        type: "object",
+        properties: {
+          success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
+          message: { type: "string", example: "Order fetched successfully" },
+          data: { $ref: "#/components/schemas/Order" },
+        },
+      },
+      OrdersListSuccessResponse: {
+        type: "object",
+        properties: {
+          success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
+          message: { type: "string", example: "Orders fetched successfully" },
+          data: {
+            type: "array",
+            items: { $ref: "#/components/schemas/Order" },
+          },
+        },
+      },
+      // --- Reviews ---
+      CreateReviewInput: {
+        type: "object",
+        required: ["rating"],
+        properties: {
+          rating: { type: "integer", minimum: 1, maximum: 5, example: 5 },
+          comment: { type: "string", example: "Exactly as described, fast shipping." },
+        },
+      },
+      Review: {
+        type: "object",
+        properties: {
+          _id: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0f9" },
+          user: { $ref: "#/components/schemas/UserPublic" },
+          product: { type: "string", example: "64f1a2b3c4d5e6f7a8b9c0d4" },
+          rating: { type: "integer", example: 5 },
+          comment: { type: "string", example: "Exactly as described, fast shipping." },
+          createdAt: { type: "string", format: "date-time" },
+          updatedAt: { type: "string", format: "date-time" },
+        },
+      },
+      ReviewSuccessResponse: {
+        type: "object",
+        properties: {
+          success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
+          message: { type: "string", example: "Review updated successfully" },
+          data: { $ref: "#/components/schemas/Review" },
+        },
+      },
+      ReviewsListSuccessResponse: {
+        type: "object",
+        properties: {
+          success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
+          message: { type: "string", example: "Reviews fetched successfully" },
+          data: {
+            type: "array",
+            items: { $ref: "#/components/schemas/Review" },
+          },
+        },
+      },
+      SuccessResponse: {
+        type: "object",
+        description: "Response shape produced by ApiResponse (used by every module in this API).",
+        properties: {
+          success: { type: "boolean", example: true },
+          statusCode: { type: "integer", example: 200 },
           message: { type: "string", example: "Operation completed successfully" },
           data: { type: "object" },
         },
       },
       ErrorResponse: {
         type: "object",
+        description: "Response shape produced by ApiError (used by every module in this API). No separate 'error' field — 'message' carries the detail.",
         properties: {
           success: { type: "boolean", example: false },
+          statusCode: { type: "integer", example: 404 },
           message: { type: "string", example: "Resource not found" },
-          error: { type: "string", example: "Additional low-level error detail (5xx only)" },
         },
       },
     },
     responses: {
+      AuthUnauthorized: {
+        description: "Missing/malformed Authorization header, or an invalid/expired JWT",
+        content: {
+          "application/json": {
+            schema: { $ref: "#/components/schemas/AuthErrorResponse" },
+            example: {
+              success: false,
+              statusCode: 401,
+              message: "Authorization token is required",
+            },
+          },
+        },
+      },
+      AuthServerError: {
+        description: "Unexpected server/database error",
+        content: {
+          "application/json": {
+            schema: { $ref: "#/components/schemas/AuthErrorResponse" },
+            example: {
+              success: false,
+              statusCode: 500,
+              message: "Internal Server Error",
+            },
+          },
+        },
+      },
       BadRequest: {
         description: "Invalid input / validation failed",
         content: {
           "application/json": {
             schema: { $ref: "#/components/schemas/ErrorResponse" },
-            example: { success: false, message: "Category name is required" },
+            example: { success: false, statusCode: 400, message: "Category name is required" },
           },
         },
       },
@@ -245,7 +490,7 @@ const swaggerDefinition = {
         content: {
           "application/json": {
             schema: { $ref: "#/components/schemas/ErrorResponse" },
-            example: { success: false, message: "Category not found" },
+            example: { success: false, statusCode: 404, message: "Category not found" },
           },
         },
       },
@@ -254,7 +499,11 @@ const swaggerDefinition = {
         content: {
           "application/json": {
             schema: { $ref: "#/components/schemas/ErrorResponse" },
-            example: { success: false, message: "A category with this name already exists" },
+            example: {
+              success: false,
+              statusCode: 409,
+              message: "A category with this name already exists",
+            },
           },
         },
       },
@@ -265,8 +514,8 @@ const swaggerDefinition = {
             schema: { $ref: "#/components/schemas/ErrorResponse" },
             example: {
               success: false,
-              message: "Server error while processing request",
-              error: "Internal error detail",
+              statusCode: 500,
+              message: "Internal Server Error",
             },
           },
         },
@@ -274,6 +523,7 @@ const swaggerDefinition = {
     },
   },
 };
+
 
 const options = {
   swaggerDefinition,
