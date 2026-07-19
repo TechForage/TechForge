@@ -528,9 +528,16 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   // Scan every route file for @openapi JSDoc blocks.
-  apis: [path.join(__dirname, "../routes/*.js")],
+  // path.join uses backslashes on Windows, but glob requires forward slashes.
+  apis: [path.join(__dirname, "../routes/*.js").split(path.sep).join("/")],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
+
+// Debug: log all paths swagger-jsdoc discovered
+console.log(
+  "[swagger-jsdoc] Generated paths:",
+  Object.keys(swaggerSpec.paths || {})
+);
 
 module.exports = swaggerSpec;

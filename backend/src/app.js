@@ -3,7 +3,7 @@ const cors = require("cors");
 
 const errorHandler = require("./middleware/error.middleware");
 const { apiReference } = require("@scalar/express-api-reference");
-const swaggerSpec = require("./docs/swagger");
+const swaggerSpec = require("./config/swagger");
 
 const authRoutes = require("./routes/auth.routes");
 const categoryRoutes = require("./routes/category.routes");
@@ -27,6 +27,11 @@ app.get("/", (req, res) => {
         success: true,
         message: "Welcome to TechForge API"
     });
+});
+
+// --- Debug: inspect the raw generated OpenAPI document ---
+app.get("/openapi.json", (req, res) => {
+    res.json(swaggerSpec);
 });
 
 // --- API Documentation (Scalar + OpenAPI) ---
