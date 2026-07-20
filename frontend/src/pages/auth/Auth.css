@@ -1,20 +1,22 @@
+/* Auth.css - Left Blue, Right White with Blue Form Card */
 /* ============================================================
-   TechForge — Registration
-   Tokens
+   TechForge — Authentication
    ============================================================ */
 .tf-page {
-  --bg: #0B0D12;
-  --panel: #10131A;
-  --surface: #161A23;
-  --surface-2: #1D222D;
-  --line: #262C38;
-  --text: #E8EAED;
-  --text-dim: #8B93A1;
-  --ember: #FF6B35;
-  --ember-dim: #C44E24;
-  --ember-glow: rgba(255, 107, 53, 0.45);
-  --cold: #4C6EF5;
-  --white-hot: #FFF4E6;
+  --bg: #F0F4FF;
+  --panel: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #F8FAFF;
+  --line: #E2E8F0;
+  --text: #1A2332;
+  --text-dim: #64748B;
+  --blue: #2563EB;
+  --blue-dim: #1D4ED8;
+  --blue-light: #DBEAFE;
+  --blue-glow: rgba(37, 99, 235, 0.15);
+  --blue-bg: #EFF6FF;
+  --dark-blue: #1E3A5F;
+  --dark-blue-bg: #0A1628;
 
   --font-display: "Space Grotesk", "Segoe UI", sans-serif;
   --font-body: "Inter", "Segoe UI", sans-serif;
@@ -33,67 +35,68 @@
 }
 
 /* ============================================================
-   Left — brand / atmosphere panel
+   Left — brand panel (BLUE)
    ============================================================ */
 .tf-brand {
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 20% 15%, rgba(255,107,53,0.10), transparent 45%),
-    var(--panel);
-  padding: 48px 56px;
+  background: linear-gradient(135deg, #1E3A5F 0%, #2563EB 100%);
+  padding: 56px 48px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid var(--line);
+  border-right: none;
 }
 
 .tf-wordmark {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   letter-spacing: 0.02em;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   z-index: 2;
+  color: #FFFFFF;
 }
 
 .tf-wordmark .dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: var(--ember);
-  box-shadow: 0 0 12px var(--ember-glow);
+  background: #FFFFFF;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .tf-brand-copy {
   z-index: 2;
-  max-width: 420px;
+  max-width: 400px;
 }
 
 .tf-eyebrow {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.14em;
+  font-size: 13px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ember);
-  margin: 0 0 18px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 12px;
+  font-weight: 600;
 }
 
 .tf-headline {
   font-family: var(--font-display);
-  font-size: 42px;
-  line-height: 1.12;
+  font-size: 38px;
+  line-height: 1.15;
   font-weight: 600;
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   letter-spacing: -0.01em;
+  color: #FFFFFF;
 }
 
 .tf-subtext {
   font-size: 15px;
-  line-height: 1.6;
-  color: var(--text-dim);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
   margin: 0;
 }
 
@@ -101,43 +104,43 @@
   z-index: 2;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--text-dim);
+  color: rgba(255, 255, 255, 0.6);
   display: flex;
   gap: 24px;
 }
 
-/* Ambient circuit board art */
+/* Ambient circuit board art - white on blue */
 .tf-circuit-art {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.55;
+  opacity: 0.08;
   z-index: 1;
 }
 
 .tf-circuit-art path {
   fill: none;
-  stroke: var(--line);
-  stroke-width: 1.4;
+  stroke: #FFFFFF;
+  stroke-width: 1.5;
 }
 
 .tf-circuit-art .live {
-  stroke: var(--ember-dim);
-  stroke-dasharray: 6 10;
-  animation: tf-flow 5s linear infinite;
-  opacity: 0.7;
+  stroke: #FFFFFF;
+  stroke-dasharray: 8 12;
+  animation: tf-flow 6s linear infinite;
+  opacity: 0.3;
 }
 
 .tf-circuit-art circle {
-  fill: var(--surface-2);
-  stroke: var(--line);
+  fill: transparent;
+  stroke: #FFFFFF;
   stroke-width: 1.2;
 }
 
 .tf-circuit-art .node-live {
-  fill: var(--ember);
-  opacity: 0.85;
+  fill: #FFFFFF;
+  opacity: 0.4;
 }
 
 @keyframes tf-flow {
@@ -145,46 +148,106 @@
 }
 
 /* ============================================================
-   Right — form panel
+   Right — form panel (WHITE background)
    ============================================================ */
 .tf-form-panel {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 48px 32px;
+  padding: 48px 40px;
+  background: #FFFFFF;
 }
 
+/* ============================================================
+   BLUE THEMED FORM CARD
+   ============================================================ */
 .tf-card {
   position: relative;
   width: 100%;
   max-width: 420px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 4px;
+  background: linear-gradient(145deg, #FFFFFF 0%, #F0F7FF 100%);
+  border: 2px solid rgba(37, 99, 235, 0.15);
+  border-radius: 16px;
   padding: 40px 36px 32px;
+  box-shadow: 
+    0 8px 32px rgba(37, 99, 235, 0.10),
+    inset 0 1px 0 rgba(37, 99, 235, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+/* Blue glowing border effect */
+.tf-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, #2563EB, #1D4ED8, #3B82F6, #2563EB);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderGlow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Blue top accent bar */
+.tf-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30px;
+  right: 30px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #2563EB, #3B82F6, #2563EB, transparent);
+  border-radius: 0 0 3px 3px;
+  filter: blur(0.5px);
 }
 
 .tf-card-heading {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
-  margin: 0 0 6px;
+  margin: 0 0 4px;
+  color: var(--text);
+  position: relative;
+}
+
+.tf-card-heading::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #2563EB, #3B82F6);
+  margin-bottom: 12px;
+  border-radius: 3px;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.3);
 }
 
 .tf-card-sub {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-dim);
   margin: 0 0 28px;
 }
 
 .tf-card-sub a {
-  color: var(--ember);
+  color: var(--blue);
   text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
-.tf-card-sub a:hover { text-decoration: underline; }
+.tf-card-sub a:hover { 
+  text-decoration: underline;
+  color: var(--blue-dim);
+}
 
 .tf-field {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .tf-label {
@@ -193,10 +256,11 @@
   align-items: baseline;
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-dim);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .tf-label .tf-status {
@@ -204,9 +268,13 @@
   letter-spacing: 0.04em;
   color: var(--text-dim);
   text-transform: none;
+  font-weight: 400;
 }
 
-.tf-label .tf-status.ok { color: var(--ember); }
+.tf-label .tf-status.ok { 
+  color: #059669;
+  font-weight: 600;
+}
 
 .tf-input-wrap {
   position: relative;
@@ -215,148 +283,218 @@
 .tf-input {
   width: 100%;
   box-sizing: border-box;
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: 11px 14px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(37, 99, 235, 0.12);
+  border-radius: 10px;
+  padding: 12px 14px;
   font-family: var(--font-body);
   font-size: 14px;
   color: var(--text);
   outline: none;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.04);
 }
 
-.tf-input::placeholder { color: #565D6B; }
+.tf-input::placeholder { 
+  color: #94A3B8;
+  font-weight: 400;
+}
 
 .tf-input:focus {
-  border-color: var(--ember);
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.14);
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08), 0 2px 12px rgba(37, 99, 235, 0.06);
+  background: var(--surface);
+  transform: translateY(-1px);
 }
 
 .tf-input.valid {
-  border-color: var(--ember-dim);
+  border-color: #059669;
+  background: rgba(5, 150, 105, 0.04);
+  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.05);
 }
 
 .tf-toggle-visibility {
   position: absolute;
-  right: 10px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: var(--text-dim);
+  color: var(--blue);
   font-family: var(--font-mono);
   font-size: 11px;
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 4px 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
 }
-.tf-toggle-visibility:hover { color: var(--ember); }
+.tf-toggle-visibility:hover { 
+  color: var(--blue-dim);
+  transform: translateY(-50%) scale(1.05);
+}
 
-/* Heat gauge — password strength, forge metaphor */
+/* Password strength gauge - Blue theme */
 .tf-gauge {
   margin-top: 10px;
 }
 
 .tf-gauge-track {
-  height: 4px;
-  border-radius: 2px;
-  background: var(--surface-2);
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(37, 99, 235, 0.08);
   overflow: hidden;
   display: flex;
-  gap: 3px;
+  gap: 4px;
 }
 
 .tf-gauge-seg {
   flex: 1;
   height: 100%;
-  border-radius: 2px;
-  background: var(--line);
-  transition: background 0.25s ease;
+  border-radius: 3px;
+  background: rgba(37, 99, 235, 0.08);
+  transition: all 0.4s ease;
 }
 
-.tf-gauge-seg.cold { background: var(--cold); }
-.tf-gauge-seg.warm { background: var(--ember-dim); }
-.tf-gauge-seg.hot { background: var(--ember); }
+.tf-gauge-seg.cold { 
+  background: #CBD5E1; 
+}
+.tf-gauge-seg.warm { 
+  background: linear-gradient(90deg, #60A5FA, #3B82F6);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+}
+.tf-gauge-seg.hot { 
+  background: linear-gradient(90deg, #3B82F6, #2563EB);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.3);
+}
 .tf-gauge-seg.white-hot {
-  background: var(--white-hot);
-  box-shadow: 0 0 8px rgba(255, 244, 230, 0.6);
+  background: linear-gradient(90deg, #2563EB, #1D4ED8, #2563EB);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+  animation: pulseGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
 
 .tf-gauge-label {
   margin-top: 6px;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-dim);
 }
 
-.tf-gauge-label .val { color: var(--text); }
+.tf-gauge-label .val { 
+  color: var(--text);
+  font-weight: 600;
+}
 
 /* Terms row */
 .tf-terms {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin: 20px 0 24px;
+  margin: 22px 0 24px;
 }
 
 .tf-checkbox {
-  width: 16px;
-  height: 16px;
-  margin-top: 2px;
-  accent-color: var(--ember);
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--blue);
   cursor: pointer;
   flex-shrink: 0;
+  border-radius: 4px;
+  border: 2px solid rgba(37, 99, 235, 0.2);
+  transition: all 0.2s ease;
+}
+
+.tf-checkbox:hover {
+  transform: scale(1.05);
 }
 
 .tf-terms label {
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.5;
   color: var(--text-dim);
 }
 
-.tf-terms a { color: var(--ember); text-decoration: none; }
-.tf-terms a:hover { text-decoration: underline; }
+.tf-terms a { 
+  color: var(--blue); 
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.tf-terms a:hover { 
+  text-decoration: underline;
+  color: var(--blue-dim);
+}
 
 .tf-error {
-  margin: 0 0 14px;
-  padding: 10px 12px;
-  border: 1px solid var(--ember-dim);
-  border-radius: 3px;
-  background: rgba(196, 78, 36, 0.12);
-  color: var(--ember);
-  font-size: 12.5px;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: 1px solid #FCA5A5;
+  border-radius: 8px;
+  background: #FEF2F2;
+  color: #DC2626;
+  font-size: 13px;
   line-height: 1.5;
 }
 
-/* Submit — energizes once the circuit is complete */
+/* Submit button - BLUE gradient */
 .tf-submit {
   width: 100%;
-  padding: 13px 0;
-  border-radius: 3px;
-  border: 1px solid var(--ember-dim);
-  background: var(--surface-2);
+  padding: 14px 0;
+  border-radius: 10px;
+  border: none;
+  background: rgba(37, 99, 235, 0.08);
   color: var(--text-dim);
   font-family: var(--font-display);
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.01em;
   cursor: not-allowed;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .tf-submit.energized {
-  background: linear-gradient(135deg, var(--ember), var(--ember-dim));
-  color: #12100E;
-  border-color: var(--ember);
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  color: #FFFFFF;
   cursor: pointer;
-  box-shadow: 0 0 24px var(--ember-glow);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+  transform: translateY(0);
+}
+
+.tf-submit.energized::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.5s ease;
+}
+
+.tf-submit.energized:hover::before {
+  left: 100%;
 }
 
 .tf-submit.energized:hover {
-  filter: brightness(1.07);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #1D4ED8, #1E3A5F);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4);
+}
+
+.tf-submit.energized:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.2);
 }
 
 .tf-submit:disabled { pointer-events: none; }
@@ -369,13 +507,17 @@
 }
 
 .tf-footer-link a {
-  color: var(--ember);
+  color: var(--blue);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
-.tf-footer-link a:hover { text-decoration: underline; }
+.tf-footer-link a:hover { 
+  text-decoration: underline;
+  color: var(--blue-dim);
+}
 
-/* ---- Corner traces: the card's circuit "completes" as fields validate ---- */
+/* ---- Corner traces - BLUE when active ---- */
 .tf-corner {
   position: absolute;
   width: 34px;
@@ -389,26 +531,34 @@
 
 .tf-corner path {
   fill: none;
-  stroke: var(--line);
-  stroke-width: 1.6;
-  transition: stroke 0.35s ease;
+  stroke: rgba(37, 99, 235, 0.15);
+  stroke-width: 1.8;
+  transition: all 0.4s ease;
 }
 .tf-corner circle {
   fill: var(--surface);
-  stroke: var(--line);
-  stroke-width: 1.4;
-  transition: stroke 0.35s ease, fill 0.35s ease;
+  stroke: rgba(37, 99, 235, 0.15);
+  stroke-width: 1.6;
+  transition: all 0.4s ease;
 }
-.tf-corner.active path { stroke: var(--ember); }
+.tf-corner.active path { 
+  stroke: var(--blue);
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.3));
+}
 .tf-corner.active circle {
-  fill: var(--ember);
-  stroke: var(--ember);
-  filter: drop-shadow(0 0 4px var(--ember-glow));
+  fill: var(--blue);
+  stroke: var(--blue);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+  filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.3));
 }
 
-.tf-link{
+.tf-link {
   cursor: pointer;
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
 }
+.tf-link:hover { text-decoration: underline; }
 
 /* ============================================================
    Responsive
@@ -416,5 +566,12 @@
 @media (max-width: 900px) {
   .tf-page { grid-template-columns: 1fr; }
   .tf-brand { display: none; }
-  .tf-form-panel { padding: 32px 20px; }
+  .tf-form-panel { padding: 32px 20px; background: var(--bg); }
+  .tf-card { padding: 32px 24px; }
+}
+
+@media (max-width: 480px) {
+  .tf-card { padding: 24px 16px; }
+  .tf-card-heading { font-size: 22px; }
+  .tf-submit { font-size: 14px; }
 }
