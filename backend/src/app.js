@@ -18,14 +18,13 @@ const app = express();
 
 // --- Core middleware (must come BEFORE routes) ---
 app.use(cors({
-    
     origin: [
         "http://localhost:3000",
         "http://localhost:5173",
-        //"https://your-frontend.vercel.app",
     ],
     credentials: true,
-  
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
