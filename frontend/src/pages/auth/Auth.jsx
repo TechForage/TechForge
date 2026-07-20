@@ -77,11 +77,16 @@ export default function Auth() {
     setSubmitting(true);
 
     try {
-      const payload = {
-        name: form.name.trim(),
-        email: form.email.trim(),
-        password: form.password,
-      };
+      const names = form.name.trim().split(" ");
+
+const payload = {
+  firstName: names[0],
+  lastName: names.slice(1).join(" "),
+  email: form.email.trim(),
+  password: form.password,
+  avatar: "",
+  phone: "",
+};
 
       const result = showLogin
         ? await login(payload.email, payload.password)
@@ -99,11 +104,7 @@ export default function Auth() {
         agree: false,
       });
 
-      if (showLogin) {
-        navigate("/home");
-      } else {
-        setShowLogin(true);
-      }
+      navigate("/home");
     } catch (error) {
       setSubmitError(
         error.response?.data?.message ||
