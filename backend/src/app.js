@@ -17,7 +17,15 @@ const reviewRoutes = require("./routes/review.routes");
 const app = express();
 
 // --- Core middleware (must come BEFORE routes) ---
-app.use(cors());
+app.use(cors({
+    
+    origin: [
+      "http://localhost:5173",
+      "https://your-frontend.vercel.app",
+    ],
+    credentials: true,
+  
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
